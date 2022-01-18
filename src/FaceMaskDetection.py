@@ -1,14 +1,13 @@
 import copy
-import numpy as np
-import matplotlib.pyplot as plt
 
+import matplotlib.pyplot as plt
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.optim import lr_scheduler
-
 import torchvision
-from torchvision import datasets,transforms
+from torch.optim import lr_scheduler
+from torchvision import datasets, transforms
 from torchvision import models
 
 NUM_OF_CLASSES = 3
@@ -16,13 +15,14 @@ NUM_OF_CLASSES = 3
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 batch_size = 8
 num_workers = 4
-#_data_dir = '/content/drive/MyDrive/colab/FaceMaskDetection/Dataset'
+# _data_dir = '/content/drive/MyDrive/colab/FaceMaskDetection/Dataset'
 _data_dir = '/content/FaceMaskDataset/'
 
 _num_epochs = 10
 _train_size, _validation_size, _test_size = 0.7, 0.15, 0.15
 mean = [0.485, 0.456, 0.406]
-std  = [0.229, 0.224, 0.225]
+std = [0.229, 0.224, 0.225]
+
 
 def split(dataset, _train_size=0.7, _validation_size=0.15, _test_size=0.15):
     train_ds = int(_train_size * len(dataset))
@@ -37,11 +37,11 @@ def split(dataset, _train_size=0.7, _validation_size=0.15, _test_size=0.15):
 
 def split_prepare_dataset(data_dir):
     train_transform = transforms.Compose([
-    transforms.RandomResizedCrop(224),
-    transforms.RandomHorizontalFlip(),
-    transforms.ToTensor(),
-    transforms.Normalize(mean=mean,
-                          std=std)
+        transforms.RandomResizedCrop(224),
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=mean,
+                             std=std)
     ])
 
     test_transform = transforms.Compose([
@@ -49,21 +49,21 @@ def split_prepare_dataset(data_dir):
         transforms.CenterCrop(224),
         transforms.ToTensor(),
         transforms.Normalize(mean=mean,
-                            std=std)
+                             std=std)
     ])
 
     all_data = datasets.ImageFolder(root=data_dir, transform=train_transform)
     train_data, validation_data, test_data = split(all_data)
 
     train_loader = torch.utils.data.DataLoader(train_data,
-                                              batch_size=batch_size,
-                                              shuffle=True,
-                                              num_workers=num_workers)
+                                               batch_size=batch_size,
+                                               shuffle=True,
+                                               num_workers=num_workers)
 
     validation_loader = torch.utils.data.DataLoader(validation_data,
-                                              batch_size=batch_size,
-                                              shuffle=True,
-                                              num_workers=num_workers)
+                                                    batch_size=batch_size,
+                                                    shuffle=True,
+                                                    num_workers=num_workers)
 
     test_loader = torch.utils.data.DataLoader(test_data,
                                               batch_size=batch_size,
@@ -76,7 +76,7 @@ def split_prepare_dataset(data_dir):
         'test': test_loader,
     }
 
-    total_batch_sizes = { 'train': len(train_loader), 'validation': len(validation_loader), 'test': len(test_loader) }
+    total_batch_sizes = {'train': len(train_loader), 'validation': len(validation_loader), 'test': len(test_loader)}
 
     print(train_data)
     print(test_data)
@@ -89,12 +89,12 @@ def split_prepare_dataset(data_dir):
 
 
 def imshow(inp, title):
-#    return
+    #    return
     inp = inp.cpu().numpy().transpose((1, 2, 0))
     inp = std * inp + mean
     inp = np.clip(inp, 0, 1)
 
-    plt.figure (figsize = (12, 6))
+    plt.figure(figsize=(12, 6))
 
     plt.imshow(inp)
     plt.title(title)
@@ -107,13 +107,14 @@ def print_labeled_samples(dataloaders, class_names):
 
     imshow(out, title=[class_names[x] for x in classes])
 
+
 class Amir(nn.Module):
-  def __init__(self):
-      super().__init__()
-      self.nclasses = NUM_OF_CLASSES
-      self.in_channels = 3
-      self.loss_func = nn.CrossEntropyLoss()
-      self.feature_extractor = nn.Sequential(
+    def __init__(self):
+        super().__init__()
+        self.nclasses = NUM_OF_CLASSES
+        self.in_channels = 3
+        self.loss_func = nn.CrossEntropyLoss()
+        self.feature_extractor = nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(2, 2),
@@ -122,11 +123,11 @@ class Amir(nn.Module):
             nn.MaxPool2d(2, 2),
             nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
-            nn.MaxPool2d(2, 2),)
+            nn.MaxPool2d(2, 2), )
 
-      self.classifier = nn.Sequential(
+        self.classifier = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(256*28*28,1024),
+            nn.Linear(256 * 28 * 28, 1024),
             nn.BatchNorm1d(1024),
             nn.ReLU(),
             nn.Linear(1024, 512),
@@ -134,37 +135,36 @@ class Amir(nn.Module):
             nn.ReLU(),
             nn.Linear(512, self.nclasses))
 
-  def forward(self, x):
+    def forward(self, x):
         features = self.feature_extractor(x)
         class_scores = self.classifier(features)
         return class_scores
 
-  def test(self, test_loader, validation_loader):
-      validation_accuracy, vall_loss = calculate_acc(self, validation_loader)
-      print("Validation Accuracy: {} Test Loss: {}".format(validation_accuracy, vall_loss))
-      test_accuracy, test_loss = calculate_acc(self, test_loader)
-      print("Test Accuracy: {} Test Loss: {}".format(test_accuracy, test_loss))
+    def test(self, test_loader, validation_loader):
+        validation_accuracy, vall_loss = calculate_acc(self, validation_loader)
+        print("Validation Accuracy: {} Test Loss: {}".format(validation_accuracy, vall_loss))
+        test_accuracy, test_loss = calculate_acc(self, test_loader)
+        print("Test Accuracy: {} Test Loss: {}".format(test_accuracy, test_loss))
 
 
 def my_model():
-    '''
+    """
     model = models.alexnet()
     num_ftrs = model.classifier[6].in_features
     num_ftrs
-    '''
+    """
 
     model = models.resnet18(pretrained=False)
     num_ftrs = model.fc.in_features
     num_ftrs
     model.fc = nn.Linear(num_ftrs, NUM_OF_CLASSES)
 
-    #model.summary()
+    # model.summary()
 
     return model
 
 
 def train_model(model, criterion, optimizer, scheduler, num_epochs, dataloaders, total_batch_sizes):
-
     model = model.to(device)
 
     best_acc = 0.0
@@ -187,7 +187,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs, dataloaders,
 
             running_loss = 0.0
             running_corrects = 0
-            i=0
+            i = 0
             for inputs, labels in dataloaders[phase]:
                 inputs = inputs.to(device)
                 labels = labels.to(device)
@@ -195,13 +195,11 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs, dataloaders,
                 optimizer.zero_grad()
 
                 with torch.set_grad_enabled(phase == 'train'):
-
                     outputs = model(inputs)
                     _, preds = torch.max(outputs, 1)
                     loss = criterion(outputs, labels)
 
                     if phase == 'train':
-
                         loss.backward()
                         optimizer.step()
 
@@ -215,7 +213,6 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs, dataloaders,
                 phase, epoch_loss, epoch_acc))
 
             if phase == 'validation' and epoch_acc > best_acc:
-
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
 
@@ -241,7 +238,7 @@ def evaluation(dataloaders, model, class_names):
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
 
-        print('Accuracy of the model on the test images: {}%'\
+        print('Accuracy of the model on the test images: {}%' \
               .format(100 * correct / total))
 
     with torch.no_grad():
@@ -254,7 +251,7 @@ def evaluation(dataloaders, model, class_names):
         _, preds = torch.max(outputs, 1)
 
         for j in range(len(inputs)):
-            print ("Acutal label", class_names[np.array(labels)[j]])
+            print("Acutal label", class_names[np.array(labels)[j]])
             inp = inputs.data[j]
             imshow(inp, 'predicted:' + class_names[preds[j]])
 
@@ -262,7 +259,7 @@ def evaluation(dataloaders, model, class_names):
 def main():
     dataloaders, total_batch_sizes, class_names = split_prepare_dataset(_data_dir)
     print_labeled_samples(dataloaders, class_names)
-    #model = my_model()
+    # model = my_model()
 
     model = models.resnet18(pretrained=True)
     num_ftrs = model.fc.in_features
@@ -276,6 +273,7 @@ def main():
     model = train_model(model, criterion, optimizer_ft, exp_lr_scheduler, _num_epochs, dataloaders, total_batch_sizes)
     model.eval()
     evaluation(dataloaders, model, class_names)
+
 
 if __name__ == "__main__":
     main()
