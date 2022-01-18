@@ -16,7 +16,8 @@ NUM_OF_CLASSES = 3
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 batch_size = 8
 num_workers = 4
-_data_dir = '/content/drive/MyDrive/colab/FaceMaskDetection/Dataset'
+#_data_dir = '/content/drive/MyDrive/colab/FaceMaskDetection/Dataset'
+_data_dir = '/content/FaceMaskDataset/'
 
 _num_epochs = 10
 _train_size, _validation_size, _test_size = 0.7, 0.15, 0.15
@@ -261,7 +262,13 @@ def evaluation(dataloaders, model, class_names):
 def main():
     dataloaders, total_batch_sizes, class_names = split_prepare_dataset(_data_dir)
     print_labeled_samples(dataloaders, class_names)
-    model = my_model()
+    #model = my_model()
+
+    model = models.resnet18(pretrained=True)
+    num_ftrs = model.fc.in_features
+    model.fc = nn.Linear(num_ftrs, 3)
+
+    print(model)
 
     criterion = nn.CrossEntropyLoss()
     optimizer_ft = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
