@@ -1,0 +1,16 @@
+@startuml
+class DecisionTreeEstimator {
+private:
+    List left_child
+    List right_child
+    List thresholds
+    List indices
+    List classes
+    List leaves
+
+    def _soft_predict(self, features, node=0):
+    predict(self, features, node=0):
+    soft_predict(self, features):
+
+}
+@enduml

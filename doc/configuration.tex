@@ -1,0 +1,34 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{pdfpages}
+\usepackage[hyperfootnotes = false,breaklinks = true]{hyperref}
+
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{array,graphicx,dcolumn,fancyhdr,float}
+
+\newcommand{\jref}{}
+\newcommand{\jhead}{University of Haifa}
+\newcommand{\jdate}{January 2022}
+
+\pagestyle{fancy}
+\fancyhead[L]{\protect\small \href{\jref}{\jhead}, \jdate}
+\fancyhead[R]{\protect\small Deep Learning}
+\fancypagestyle{firstpage}{
+    \lhead{\protect\small \href{\jref}{\jhead}, \jdate}
+    \rhead{}
+}
+
+\usepackage[labelfont = sc,textfont = sf]{caption}
+
+\urlstyle{rm}
+
+\usepackage{booktabs}
+\usepackage{mathtools}
+\usepackage{amsmath}
+
+\setlength{\parindent}{0em}
+
+\setcounter{page}{1}
+
+\graphicspath{{images}}
