@@ -11,16 +11,17 @@ from torch.optim import lr_scheduler
 from torchvision import datasets, transforms
 from torchvision import models
 
-mask_class_names_list = ['mask_weared_incorrect', 'with_mask', 'without_mask']
-NUM_OF_CLASSES = len(mask_class_names_list)
-MODEL_PATH = '/content/drive/MyDrive/colab/FaceMaskDetection/out/MaskModel.pth'
+combined_class_names_list = ['airplane', 'car', 'cat', 'dog', 'flower', 'fruit', 'mask_weared_incorrect', 'motorbike', 'with_mask', 'without_mask']
+NUM_OF_CLASSES = len(combined_class_names_list)
+
+MODEL_PATH = '/content/drive/MyDrive/colab/Combined/out/CombinedModel.pth'
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+# device = torch.device("cpu")
 
 batch_size = 8
 num_workers = 4
-_data_dir = '/content/drive/MyDrive/colab/FaceMaskDetection/Dataset'
-# _data_dir = '/content/drive/MyDrive/colab/Combined/Dataset'
+_data_dir = '/content/drive/MyDrive/colab/Combined/Dataset'
 
 _num_epochs = 10
 _train_size, _validation_size, _test_size = 0.7, 0.15, 0.15
@@ -144,16 +145,10 @@ class Amir(nn.Module):
         class_scores = self.classifier(features)
         return class_scores
 
-    def test(self, test_loader, validation_loader):
-        validation_accuracy, vall_loss = calculate_acc(self, validation_loader)
-        print("Validation Accuracy: {} Test Loss: {}".format(validation_accuracy, vall_loss))
-        test_accuracy, test_loss = calculate_acc(self, test_loader)
-        print("Test Accuracy: {} Test Loss: {}".format(test_accuracy, test_loss))
-
 
 def my_model():
     '''
-    model = models.alexnet()
+    model = models.resnet18()
     num_ftrs = model.classifier[6].in_features
     num_ftrs
     '''
@@ -261,12 +256,12 @@ def evaluation(dataloaders, model, class_names):
             imshow(inp, 'predicted:' + class_names[preds[j]])
 
 
-def classify_single_image_mask(img, model):
+def classify_single_image_human(img, model):
     with torch.no_grad():
         class_prediction = torch.argmax(model(img.unsqueeze(0))).item()
-        gender = mask_class_names_list[class_prediction]
+        gender = combined_class_names_list[class_prediction]
         print("this is a {}.".format(gender))
-        return class_prediction, mask_class_names_list
+        return class_prediction, combined_class_names_list
 
 
 def main():
