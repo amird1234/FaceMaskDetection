@@ -1,5 +1,7 @@
 import torch
 from torchvision import transforms
+import matplotlib.pyplot as plt
+import numpy as np
 
 MODEL_PATH = '/content/drive/MyDrive/colab/GenderClassification/New/output/model.pth'
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -22,3 +24,14 @@ test_transform = transforms.Compose([
     transforms.Normalize(mean=mean,
                          std=std)
 ])
+
+
+def imshow(inp, title):
+    inp = inp.cpu().numpy().transpose((1, 2, 0))
+    inp = std * inp + mean
+    inp = np.clip(inp, 0, 1)
+
+    plt.figure (figsize = (12, 6))
+
+    plt.imshow(inp)
+    plt.title(title)
