@@ -11,13 +11,12 @@ from torch.optim import lr_scheduler
 from torchvision import datasets, transforms
 from torchvision import models
 
+from FaceMaskClassificationUtils import imshow, std, mean, DEVICE
+
 combined_class_names_list = ['airplane', 'car', 'cat', 'dog', 'flower', 'fruit', 'mask_weared_incorrect', 'motorbike', 'with_mask', 'without_mask']
 NUM_OF_CLASSES = len(combined_class_names_list)
 
 MODEL_PATH = '/content/drive/MyDrive/colab/Combined/out/CombinedModel.pth'
-
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-# device = torch.device("cpu")
 
 batch_size = 8
 num_workers = 4
@@ -25,8 +24,6 @@ _data_dir = '/content/drive/MyDrive/colab/Combined/Dataset'
 
 _num_epochs = 10
 _train_size, _validation_size, _test_size = 0.7, 0.15, 0.15
-mean = [0.485, 0.456, 0.406]
-std = [0.229, 0.224, 0.225]
 
 
 def split(dataset, _train_size=0.7, _validation_size=0.15, _test_size=0.15):
@@ -93,18 +90,6 @@ def split_prepare_dataset(data_dir):
     return dataloaders, total_batch_sizes, class_names
 
 
-def imshow(inp, title):
-    #    return
-    inp = inp.cpu().numpy().transpose((1, 2, 0))
-    inp = std * inp + mean
-    inp = np.clip(inp, 0, 1)
-
-    plt.figure(figsize=(12, 6))
-
-    plt.imshow(inp)
-    plt.title(title)
-
-
 def print_labeled_samples(dataloaders, class_names):
     inputs, classes = next(iter(dataloaders['test']))
 
@@ -164,7 +149,7 @@ def my_model():
 
 
 def train_model(model, criterion, optimizer, scheduler, num_epochs, dataloaders, total_batch_sizes):
-    model = model.to(device)
+    model = model.to(DEVICE)
 
     best_acc = 0.0
     best_model_wts = copy.deepcopy(model.state_dict())
@@ -188,8 +173,8 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs, dataloaders,
             running_corrects = 0
             i = 0
             for inputs, labels in dataloaders[phase]:
-                inputs = inputs.to(device)
-                labels = labels.to(device)
+                inputs = inputs.to(DEVICE)
+                labels = labels.to(DEVICE)
 
                 optimizer.zero_grad()
 
@@ -230,8 +215,8 @@ def evaluation(dataloaders, model, class_names):
         total = 0
 
         for images, labels in dataloaders['test']:
-            images = images.to(device)
-            labels = labels.to(device)
+            images = images.to(DEVICE)
+            labels = labels.to(DEVICE)
 
             outputs = model(images)
             _, predicted = torch.max(outputs.data, 1)
@@ -243,7 +228,7 @@ def evaluation(dataloaders, model, class_names):
 
     with torch.no_grad():
         inputs, labels = iter(dataloaders['test']).next()
-        inputs = inputs.to(device)
+        inputs = inputs.to(DEVICE)
 
         inp = torchvision.utils.make_grid(inputs)
 
