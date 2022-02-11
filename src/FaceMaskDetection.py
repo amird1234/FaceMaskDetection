@@ -9,15 +9,10 @@ import torchvision
 from torch.optim import lr_scheduler
 from torchvision import datasets, transforms
 from torchvision import models
-from FaceMaskClassificationUtils import imshow, std, mean, DEVICE, Mask, NUM_OF_FACEMASK_CLASSES
-from FaceCrop import faces_crop
+from FaceMaskClassificationUtils import imshow, std, mean, DEVICE, NUM_OF_FACEMASK_CLASSES, CPU_DEVICE
 
 mask_class_names_list = ['mask_weared_incorrect', 'with_mask', 'without_mask']
 MODEL_PATH = '/content/drive/MyDrive/colab/FaceMaskDetection/out/MaskModel.pth'
-
-# DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
-DEVICE = torch.device("cpu")
 
 batch_size = 8
 num_workers = 4
@@ -233,6 +228,9 @@ def classify_mask_usage(img, model):
     :return: Mask enum (MASK_WORN_INCORRECT, WITH_MASK, WITHOUT_MASK)
     """
     with torch.no_grad():
+        print(CPU_DEVICE)
+        img = img.to(CPU_DEVICE)
+        model.to(CPU_DEVICE)
         class_prediction = torch.argmax(model(img.unsqueeze(0))).item()
         mask = mask_class_names_list[class_prediction]
         print("classify_mask_usage: this is a {}.".format(mask))
@@ -251,7 +249,7 @@ def train_face_mask_detection(model_path=MODEL_PATH):
     num_ftrs = model.fc.in_features
     model.fc = nn.Linear(num_ftrs, NUM_OF_FACEMASK_CLASSES)
 
-    print(model)
+    #print(model)
 
     criterion = nn.CrossEntropyLoss()
     optimizer_ft = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
