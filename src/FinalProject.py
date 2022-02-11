@@ -2,8 +2,9 @@ import argparse
 import torch
 from PIL import Image
 from FaceMaskClassificationUtils import DEVICE, test_transform
-from HumanDetection import classify_single_image_human
-from FaceMaskDetection import classify_single_image_mask
+from HumanDetection import classify_is_human
+from FaceMaskDetection import classify_mask_usage
+from FaceCrop import faces_crop
 
 
 class FinalProject:
@@ -23,14 +24,25 @@ class FinalProject:
 
     def single_image_classify(self, image_path):
         img = test_transform(Image.open(image_path))
-        classify_single_image_mask(img, self.mask_model)
-        classify_single_image_human(img, self.human_model)
+        is_human = classify_is_human(img, self.human_model)
+        if is_human is True:
+            return False
+        mask_usage = classify_mask_usage(img, self.mask_model)
+        print("mask usage is " + str(mask_usage))
+        return mask_usage
+
+
+def load_models(human_model_path, mask_model_path):
+    return FinalProject(human_model_path, mask_model_path)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Description of your program')
     parser.add_argument('-H', '--human_model_path', help='Human Model Path', required=True)
     parser.add_argument('-M', '--mask_model_path', help='Face Mask Model path', required=True)
+    parser.add_argument('-F', '--image_path', help='image to classify', required=False)
     args = parser.parse_args()
     print(args)
-    fp = FinalProject(args.human_model_path, args.mask_model_path)
+    fp = load_models(args.human_model_path, args.mask_model_path)
+    fp.single_image_classify()
+

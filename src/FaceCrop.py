@@ -3,7 +3,7 @@ from facenet_pytorch import MTCNN, InceptionResnetV1
 from PIL import Image
 
 
-def face_crop(in_path):
+def faces_crop(in_path):
     """
     crop an image found in in_path and return the output
     :param in_path:
@@ -16,7 +16,7 @@ def face_crop(in_path):
     resnet = InceptionResnetV1(pretrained='vggface2').eval()
 
     img = Image.open(in_path)
-    # Get cropped and prewhitened image tensor
+    # Get cropped and pre whitened image tensor
     img_cropped = mtcnn(img)
 
     return img_cropped
