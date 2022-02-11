@@ -5,8 +5,8 @@ import numpy as np
 from enum import Enum
 
 MODEL_PATH = '/content/drive/MyDrive/colab/GenderClassification/New/output/model.pth'
-# DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-DEVICE = "cpu"
+DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+#DEVICE = "cpu"
 
 NUM_OF_FACEMASK_CLASSES = 3
 NUM_OF_OBJECTS_CLASSES = 10
@@ -40,7 +40,7 @@ def imshow(inp, title):
 
     plt.imshow(inp)
     plt.title(title)
-    plt.savefig('/content/sample_data/twoWomen-Cropped-' + title.replace(" ", "") + '.jpeg')
+    # plt.savefig('/content/sample_data/twoWomen-Cropped-' + title.replace(" ", "") + '.jpeg')
 
 
 class Mask(Enum):
