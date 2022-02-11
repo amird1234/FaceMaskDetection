@@ -241,15 +241,30 @@ def evaluation(dataloaders, model, class_names):
             imshow(inp, 'predicted:' + class_names[preds[j]])
 
 
-def classify_single_image_human(img, model):
+def classify_is_human(img, model):
+    """
+    Determines if a specific picture has human image in it
+    :param img: the image to classify
+    :param model: the model to be used
+    :return: Boolean (True: human, False: not human)
+    """
     with torch.no_grad():
         class_prediction = torch.argmax(model(img.unsqueeze(0))).item()
-        gender = combined_class_names_list[class_prediction]
-        print("this is a {}.".format(gender))
-        return class_prediction, combined_class_names_list
+        species = combined_class_names_list[class_prediction]
+        print("this is a {}.".format(species))
+        if species == combined_class_names_list.index('mask_weared_incorrect') or \
+                species == combined_class_names_list.index('with_mask') or \
+                species == combined_class_names_list.index('without_mask'):
+            return True
+        else:
+            return False
 
 
-def main():
+def train():
+    """
+    train the model
+    :return: path to the model
+    """
     dataloaders, total_batch_sizes, class_names = split_prepare_dataset(_data_dir)
     print_labeled_samples(dataloaders, class_names)
     # model = my_model()
@@ -274,6 +289,9 @@ def main():
         os.remove(MODEL_PATH)
     torch.save(checkpoint, MODEL_PATH)
 
+    return MODEL_PATH
+
 
 if __name__ == "__main__":
-    main()
+    path = train()
+    print("model saved to " + path)

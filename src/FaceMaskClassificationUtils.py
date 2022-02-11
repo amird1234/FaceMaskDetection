@@ -2,6 +2,7 @@ import torch
 from torchvision import transforms
 import matplotlib.pyplot as plt
 import numpy as np
+from enum import Enum
 
 MODEL_PATH = '/content/drive/MyDrive/colab/GenderClassification/New/output/model.pth'
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -35,3 +36,9 @@ def imshow(inp, title):
 
     plt.imshow(inp)
     plt.title(title)
+
+
+class Mask(Enum):
+    MASK_WORN_INCORRECT = 0
+    WITH_MASK = 1
+    WITHOUT_MASK = 2
