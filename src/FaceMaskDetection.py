@@ -15,7 +15,9 @@ from FaceCrop import faces_crop
 mask_class_names_list = ['mask_weared_incorrect', 'with_mask', 'without_mask']
 MODEL_PATH = '/content/drive/MyDrive/colab/FaceMaskDetection/out/MaskModel.pth'
 
-DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+# DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+DEVICE = torch.device("cpu")
 
 batch_size = 8
 num_workers = 4
@@ -237,14 +239,13 @@ def classify_mask_usage(img, model):
         return mask
 
 
-def train():
+def train_face_mask_detection(model_path=MODEL_PATH):
     """
     train the model
     :return: path to the model
     """
     dataloaders, total_batch_sizes, class_names = split_prepare_dataset(_data_dir)
     print_labeled_samples(dataloaders, class_names)
-    # model = my_model()
 
     model = models.resnet18(pretrained=True)
     num_ftrs = model.fc.in_features
@@ -262,10 +263,10 @@ def train():
     # save model
     checkpoint = {'model': models.resnet18(),
                   'state_dict': model.state_dict()}
-    if os.path.exists(MODEL_PATH):
-        os.remove(MODEL_PATH)
-    torch.save(checkpoint, MODEL_PATH)
+    if os.path.exists(model_path):
+        os.remove(model_path)
+    torch.save(checkpoint, model_path)
 
 
 if __name__ == "__main__":
-    train()
+    train_face_mask_detection()

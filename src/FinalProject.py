@@ -2,10 +2,11 @@ import argparse
 import torch
 from PIL import Image
 from FaceMaskClassificationUtils import DEVICE, test_transform, NUM_OF_FACEMASK_CLASSES, NUM_OF_OBJECTS_CLASSES, imshow
-from HumanDetection import classify_is_human
-from FaceMaskDetection import classify_mask_usage
+from HumanDetection import classify_is_human, train_human_detection
+from FaceMaskDetection import classify_mask_usage, train_face_mask_detection
 from FaceCrop import faces_crop
 import torch.nn as nn
+import time
 
 
 class FinalProject:
@@ -44,19 +45,48 @@ class FinalProject:
         # return mask_usage
 
 
+def train_models(human_model_path, mask_model_path):
+    print("train_models: Training both models")
+    train_start = time.time()
+    train_human_detection(human_model_path)
+    train_end = time.time()
+    print("FinalProject: training human model took " + str(train_end - train_start))
+
+    train_start = time.time()
+    train_face_mask_detection(mask_model_path)
+    train_end = time.time()
+    print("FinalProject: training mask model took " + str(train_end - train_start))
+
+
 def load_models(human_model_path, mask_model_path):
     return FinalProject(human_model_path, mask_model_path)
 
 
 if __name__ == '__main__':
     '''
-    >>>python FinalProject.py -H '/content/drive/MyDrive/colab/Combined/out/CombinedModel.pth' -M '/content/drive/MyDrive/colab/FaceMaskDetection/out/MaskModel.pth' -F '/content/sample_data/twoWomen.jpeg'
+    >>> python FinalProject.py -H '/content/drive/MyDrive/colab/Combined/out/CombinedModel.pth' -M '/content/drive/MyDrive/colab/FaceMaskDetection/out/MaskModel.pth' -F '/content/sample_data/twoWomen.jpeg'
     '''
     parser = argparse.ArgumentParser(description='Description of your program')
     parser.add_argument('-H', '--human_model_path', help='Human Model Path', required=True)
     parser.add_argument('-M', '--mask_model_path', help='Face Mask Model path', required=True)
-    parser.add_argument('-F', '--image_path', help='image to classify', required=False)
+    parser.add_argument('-F', '--image_path', help='image to classify', required=True)
+    parser.add_argument('--train', dest='train', action='store_true')
+    parser.set_defaults(train=False)
     args = parser.parse_args()
     print(args)
+
+    if args.train:
+        print("FinalProject: should train")
+        train_models(args.human_model_path, args.mask_model_path)
+    else:
+        print("FinalProject: shouldn't train")
+
+    start = time.time()
     fp = load_models(args.human_model_path, args.mask_model_path)
+    end = time.time()
+    print("FinalProject: loading models took " + str(end - start))
+
+    start = time.time()
     fp.single_image_classify(args.image_path)
+    end = time.time()
+    print("FinalProject: testing image took " + str(end - start))
