@@ -11,10 +11,9 @@ from torch.optim import lr_scheduler
 from torchvision import datasets, transforms
 from torchvision import models
 
-from FaceMaskClassificationUtils import imshow, std, mean, DEVICE
+from FaceMaskClassificationUtils import imshow, std, mean, DEVICE, Mask
 
 combined_class_names_list = ['airplane', 'car', 'cat', 'dog', 'flower', 'fruit', 'mask_weared_incorrect', 'motorbike', 'with_mask', 'without_mask']
-NUM_OF_CLASSES = len(combined_class_names_list)
 
 MODEL_PATH = '/content/drive/MyDrive/colab/Combined/out/CombinedModel.pth'
 
@@ -101,7 +100,7 @@ def print_labeled_samples(dataloaders, class_names):
 class Amir(nn.Module):
     def __init__(self):
         super().__init__()
-        self.nclasses = NUM_OF_CLASSES
+        self.nclasses = NUM_OF_OBJECTS_CLASSES
         self.in_channels = 3
         self.loss_func = nn.CrossEntropyLoss()
         self.feature_extractor = nn.Sequential(
@@ -129,23 +128,6 @@ class Amir(nn.Module):
         features = self.feature_extractor(x)
         class_scores = self.classifier(features)
         return class_scores
-
-
-def my_model():
-    '''
-    model = models.resnet18()
-    num_ftrs = model.classifier[6].in_features
-    num_ftrs
-    '''
-
-    model = models.resnet18(pretrained=True)
-    num_ftrs = model.fc.in_features
-    num_ftrs
-    model.fc = nn.Linear(num_ftrs, NUM_OF_CLASSES)
-
-    # model.summary()
-
-    return model
 
 
 def train_model(model, criterion, optimizer, scheduler, num_epochs, dataloaders, total_batch_sizes):
@@ -248,15 +230,18 @@ def classify_is_human(img, model):
     :param model: the model to be used
     :return: Boolean (True: human, False: not human)
     """
+    print("classify if it is human")
     with torch.no_grad():
         class_prediction = torch.argmax(model(img.unsqueeze(0))).item()
         species = combined_class_names_list[class_prediction]
-        print("this is a {}.".format(species))
-        if species == combined_class_names_list.index('mask_weared_incorrect') or \
-                species == combined_class_names_list.index('with_mask') or \
-                species == combined_class_names_list.index('without_mask'):
+        print("classify_is_human: this is a {}.".format(species))
+        if species == 'mask_weared_incorrect' or \
+            species == 'with_mask' or \
+            species == 'without_mask':
+            print("classify_is_human: it is human")
             return True
         else:
+            print("classify_is_human: it is NOT human")
             return False
 
 
@@ -267,11 +252,10 @@ def train():
     """
     dataloaders, total_batch_sizes, class_names = split_prepare_dataset(_data_dir)
     print_labeled_samples(dataloaders, class_names)
-    # model = my_model()
 
     model = models.resnet18(pretrained=True)
     num_ftrs = model.fc.in_features
-    model.fc = nn.Linear(num_ftrs, NUM_OF_CLASSES)
+    model.fc = nn.Linear(num_ftrs, NUM_OF_OBJECTS_CLASSES)
 
     print(model)
 
