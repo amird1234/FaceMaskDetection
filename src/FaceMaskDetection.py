@@ -1,7 +1,6 @@
 import copy
 import os
 
-import matplotlib.pyplot as plt
 import numpy as np
 import torch
 import torch.nn as nn
@@ -10,7 +9,8 @@ import torchvision
 from torch.optim import lr_scheduler
 from torchvision import datasets, transforms
 from torchvision import models
-from FaceMaskClassificationUtils import imshow, std, mean, DEVICE
+from FaceMaskClassificationUtils import imshow, std, mean, DEVICE, Mask
+from FaceCrop import faces_crop
 
 mask_class_names_list = ['mask_weared_incorrect', 'with_mask', 'without_mask']
 NUM_OF_CLASSES = len(mask_class_names_list)
@@ -130,12 +130,6 @@ class Amir(nn.Module):
         class_scores = self.classifier(features)
         return class_scores
 
-    def test(self, test_loader, validation_loader):
-        validation_accuracy, vall_loss = calculate_acc(self, validation_loader)
-        print("Validation Accuracy: {} Test Loss: {}".format(validation_accuracy, vall_loss))
-        test_accuracy, test_loss = calculate_acc(self, test_loader)
-        print("Test Accuracy: {} Test Loss: {}".format(test_accuracy, test_loss))
-
 
 def my_model():
     '''
@@ -247,15 +241,25 @@ def evaluation(dataloaders, model, class_names):
             imshow(inp, 'predicted:' + class_names[preds[j]])
 
 
-def classify_single_image_mask(img, model):
+def classify_mask_usage(img, model):
+    """
+    Determines if and how a human wears a mask
+    :param img: the human image to classify
+    :param model: the model to be used
+    :return: Mask enum (MASK_WORN_INCORRECT, WITH_MASK, WITHOUT_MASK)
+    """
     with torch.no_grad():
         class_prediction = torch.argmax(model(img.unsqueeze(0))).item()
-        gender = mask_class_names_list[class_prediction]
-        print("this is a {}.".format(gender))
-        return class_prediction, mask_class_names_list
+        mask = mask_class_names_list[class_prediction]
+        print("this is a {}.".format(mask))
+        return Mask(mask)
 
 
-def main():
+def train():
+    """
+    train the model
+    :return: path to the model
+    """
     dataloaders, total_batch_sizes, class_names = split_prepare_dataset(_data_dir)
     print_labeled_samples(dataloaders, class_names)
     # model = my_model()
@@ -282,4 +286,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    train()
