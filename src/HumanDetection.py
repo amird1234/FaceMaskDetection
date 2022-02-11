@@ -11,9 +11,10 @@ from torch.optim import lr_scheduler
 from torchvision import datasets, transforms
 from torchvision import models
 
-from FaceMaskClassificationUtils import imshow, std, mean, DEVICE, Mask
+from FaceMaskClassificationUtils import imshow, std, mean, DEVICE, Mask, NUM_OF_OBJECTS_CLASSES
 
-combined_class_names_list = ['airplane', 'car', 'cat', 'dog', 'flower', 'fruit', 'mask_weared_incorrect', 'motorbike', 'with_mask', 'without_mask']
+combined_class_names_list = ['airplane', 'car', 'cat', 'dog', 'flower', 'fruit', 'mask_weared_incorrect', 'motorbike',
+                             'with_mask', 'without_mask']
 
 MODEL_PATH = '/content/drive/MyDrive/colab/Combined/out/CombinedModel.pth'
 
@@ -236,8 +237,8 @@ def classify_is_human(img, model):
         species = combined_class_names_list[class_prediction]
         print("classify_is_human: this is a {}.".format(species))
         if species == 'mask_weared_incorrect' or \
-            species == 'with_mask' or \
-            species == 'without_mask':
+                species == 'with_mask' or \
+                species == 'without_mask':
             print("classify_is_human: it is human")
             return True
         else:
@@ -245,7 +246,7 @@ def classify_is_human(img, model):
             return False
 
 
-def train():
+def train_human_detection(model_path=MODEL_PATH):
     """
     train the model
     :return: path to the model
@@ -269,13 +270,13 @@ def train():
     # save model
     checkpoint = {'model': models.resnet18(),
                   'state_dict': model.state_dict()}
-    if os.path.exists(MODEL_PATH):
-        os.remove(MODEL_PATH)
-    torch.save(checkpoint, MODEL_PATH)
+    if os.path.exists(model_path):
+        os.remove(model_path)
+    torch.save(checkpoint, model_path)
 
-    return MODEL_PATH
+    return model_path
 
 
 if __name__ == "__main__":
-    path = train()
+    path = train_human_detection()
     print("model saved to " + path)
