@@ -7,6 +7,7 @@ from FaceMaskDetection import classify_mask_usage, train_face_mask_detection
 from FaceCrop import faces_crop
 import torch.nn as nn
 import time
+import datetime
 
 
 class FinalProject:
@@ -50,12 +51,12 @@ def train_models(human_model_path, mask_model_path):
     train_start = time.time()
     train_human_detection(human_model_path)
     train_end = time.time()
-    print("FinalProject: training human model took " + str(train_end - train_start))
+    print("FinalProject: training human model took " + str(datetime.timedelta(seconds=(train_end - train_start))))
 
     train_start = time.time()
     train_face_mask_detection(mask_model_path)
     train_end = time.time()
-    print("FinalProject: training mask model took " + str(train_end - train_start))
+    print("FinalProject: training mask model took " + str(datetime.timedelta(seconds=(train_end - train_start))))
 
 
 def load_models(human_model_path, mask_model_path):
@@ -84,9 +85,9 @@ if __name__ == '__main__':
     start = time.time()
     fp = load_models(args.human_model_path, args.mask_model_path)
     end = time.time()
-    print("FinalProject: loading models took " + str(end - start))
+    print("FinalProject: loading models took " + str(datetime.timedelta(seconds=(end - start))))
 
     start = time.time()
     fp.single_image_classify(args.image_path)
     end = time.time()
-    print("FinalProject: testing image took " + str(end - start))
+    print("FinalProject: testing image took " + str(datetime.timedelta(seconds=(end - start))))
