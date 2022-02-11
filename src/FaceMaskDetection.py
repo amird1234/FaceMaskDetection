@@ -9,11 +9,10 @@ import torchvision
 from torch.optim import lr_scheduler
 from torchvision import datasets, transforms
 from torchvision import models
-from FaceMaskClassificationUtils import imshow, std, mean, DEVICE, Mask
+from FaceMaskClassificationUtils import imshow, std, mean, DEVICE, Mask, NUM_OF_FACEMASK_CLASSES
 from FaceCrop import faces_crop
 
 mask_class_names_list = ['mask_weared_incorrect', 'with_mask', 'without_mask']
-NUM_OF_CLASSES = len(mask_class_names_list)
 MODEL_PATH = '/content/drive/MyDrive/colab/FaceMaskDetection/out/MaskModel.pth'
 
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -101,7 +100,7 @@ def print_labeled_samples(dataloaders, class_names):
 class Amir(nn.Module):
     def __init__(self):
         super().__init__()
-        self.nclasses = NUM_OF_CLASSES
+        self.nclasses = NUM_OF_FACEMASK_CLASSES
         self.in_channels = 3
         self.loss_func = nn.CrossEntropyLoss()
         self.feature_extractor = nn.Sequential(
@@ -129,23 +128,6 @@ class Amir(nn.Module):
         features = self.feature_extractor(x)
         class_scores = self.classifier(features)
         return class_scores
-
-
-def my_model():
-    '''
-    model = models.alexnet()
-    num_ftrs = model.classifier[6].in_features
-    num_ftrs
-    '''
-
-    model = models.resnet18(pretrained=True)
-    num_ftrs = model.fc.in_features
-    num_ftrs
-    model.fc = nn.Linear(num_ftrs, NUM_OF_CLASSES)
-
-    # model.summary()
-
-    return model
 
 
 def train_model(model, criterion, optimizer, scheduler, num_epochs, dataloaders, total_batch_sizes):
@@ -251,8 +233,8 @@ def classify_mask_usage(img, model):
     with torch.no_grad():
         class_prediction = torch.argmax(model(img.unsqueeze(0))).item()
         mask = mask_class_names_list[class_prediction]
-        print("this is a {}.".format(mask))
-        return Mask(mask)
+        print("classify_mask_usage: this is a {}.".format(mask))
+        return mask
 
 
 def train():
@@ -266,7 +248,7 @@ def train():
 
     model = models.resnet18(pretrained=True)
     num_ftrs = model.fc.in_features
-    model.fc = nn.Linear(num_ftrs, NUM_OF_CLASSES)
+    model.fc = nn.Linear(num_ftrs, NUM_OF_FACEMASK_CLASSES)
 
     print(model)
 
