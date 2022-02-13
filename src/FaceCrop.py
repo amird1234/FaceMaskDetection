@@ -3,7 +3,7 @@ from facenet_pytorch import MTCNN, InceptionResnetV1
 from PIL import Image
 
 
-def faces_crop(in_path):
+def objects_crop(in_path):
     """
     crop an image found in in_path and return the output
     :param in_path:

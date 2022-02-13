@@ -237,12 +237,12 @@ def classify_mask_usage(img, model):
         return mask
 
 
-def train_face_mask_detection(model_path=MODEL_PATH):
+def train_face_mask_detection(model_path=MODEL_PATH, data_dir=_data_dir):
     """
     train the model
     :return: path to the model
     """
-    dataloaders, total_batch_sizes, class_names = split_prepare_dataset(_data_dir)
+    dataloaders, total_batch_sizes, class_names = split_prepare_dataset(data_dir)
     print_labeled_samples(dataloaders, class_names)
 
     model = models.resnet18(pretrained=True)
