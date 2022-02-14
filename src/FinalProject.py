@@ -69,9 +69,9 @@ if __name__ == '__main__':
     '''
     parser = argparse.ArgumentParser(description='Description of your program')
     parser.add_argument('-H', '--human_model_path', help='Human Model Path', required=True)
-    parser.add_argument('-a', '--human_data_path', help='Human Data Path', required=True)
+    parser.add_argument('-a', '--human_data_path', help='Human Data Path', required=False)
     parser.add_argument('-M', '--mask_model_path', help='Face Mask Model path', required=True)
-    parser.add_argument('-b', '--mask_data_path', help='Face Mask Data path', required=True)
+    parser.add_argument('-b', '--mask_data_path', help='Face Mask Data path', required=False)
     parser.add_argument('-F', '--image_path', help='image to classify', required=True)
     parser.add_argument('--train', dest='train', action='store_true')
     parser.set_defaults(train=False)
