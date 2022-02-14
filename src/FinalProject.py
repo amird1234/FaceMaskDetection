@@ -4,7 +4,7 @@ from PIL import Image
 from FaceMaskClassificationUtils import DEVICE, test_transform, NUM_OF_FACEMASK_CLASSES, NUM_OF_OBJECTS_CLASSES, imshow
 from HumanDetection import classify_is_human, train_human_detection
 from FaceMaskDetection import classify_mask_usage, train_face_mask_detection
-from ObjectCrop import objects_crop
+from ObjectCrop import ObjectCrop
 import torch.nn as nn
 import time
 import datetime
@@ -28,6 +28,7 @@ class FinalProject:
         mask_model.eval()
         print("mask model successfully loaded")
 
+        self.oc = ObjectCrop()
         self.human_model = human_model
         self.mask_model = mask_model
 
@@ -38,7 +39,7 @@ class FinalProject:
         if is_human is not True:
             return False
         print("cropping image")
-        imgs = objects_crop(image_path)
+        imgs = self.oc.objects_crop(image_path)
         mask_usages = []
         print("single_image_classify got " + str(len([img for img in imgs])) + " faces to classify")
         for i, img in enumerate(imgs):

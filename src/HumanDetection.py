@@ -10,7 +10,7 @@ import torchvision
 from torch.optim import lr_scheduler
 from torchvision import datasets, transforms
 from torchvision import models
-from ObjectCrop import objects_crop
+from ObjectCrop import ObjectCrop
 
 from FaceMaskClassificationUtils import imshow, std, mean, DEVICE, NUM_OF_OBJECTS_CLASSES, CPU_DEVICE
 
@@ -225,14 +225,14 @@ def evaluation(dataloaders, model, class_names):
             imshow(inp, 'predicted:' + class_names[preds[j]])
 
 
-def classify_is_there_human_in_image(image_path, human_model):
+def classify_is_there_human_in_image(image_path, human_model, oc_model):
     """
     return True if there's a human in the image
     :param image_path: the path of the image
     :param human_model: the model that determines if an object is human
     :return:
     """
-    imgs = objects_crop(image_path)
+    imgs = oc_model.objects_crop(image_path)
     print("classify_is_there_human_in_image")
     for i, img in enumerate(imgs):
         if classify_is_human(img, human_model):

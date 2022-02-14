@@ -228,7 +228,6 @@ def classify_mask_usage(img, model):
     :return: Mask enum (MASK_WORN_INCORRECT, WITH_MASK, WITHOUT_MASK)
     """
     with torch.no_grad():
-        print(CPU_DEVICE)
         img = img.to(CPU_DEVICE)
         model.to(CPU_DEVICE)
         class_prediction = torch.argmax(model(img.unsqueeze(0))).item()
