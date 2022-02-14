@@ -10,7 +10,7 @@ import torchvision
 from torch.optim import lr_scheduler
 from torchvision import datasets, transforms
 from torchvision import models
-from FaceCrop import objects_crop
+from ObjectCrop import objects_crop
 
 from FaceMaskClassificationUtils import imshow, std, mean, DEVICE, NUM_OF_OBJECTS_CLASSES, CPU_DEVICE
 

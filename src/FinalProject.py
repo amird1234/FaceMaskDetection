@@ -4,7 +4,7 @@ from PIL import Image
 from FaceMaskClassificationUtils import DEVICE, test_transform, NUM_OF_FACEMASK_CLASSES, NUM_OF_OBJECTS_CLASSES, imshow
 from HumanDetection import classify_is_human, train_human_detection
 from FaceMaskDetection import classify_mask_usage, train_face_mask_detection
-from FaceCrop import objects_crop
+from ObjectCrop import objects_crop
 import torch.nn as nn
 import time
 import datetime
