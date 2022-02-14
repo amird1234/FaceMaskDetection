@@ -15,7 +15,7 @@ class Gui:
         # Creates the window from the imported Tkinter module
         self.window = tk.Tk()
         # Creates the size of the window
-        self.window.geometry("700x600")
+        self.window.geometry("800x800")
         # Adds a title to the Windows GUI for the window
         self.window.title("Mask Classifier")
         title = tk.Label(self.window, foreground="black", text="Mask Classifier", font="30")
@@ -29,18 +29,21 @@ class Gui:
                                         command=self.upload_image)
         upload_image_button.place(x=50, y=70)
 
+    def place_image(self, i, width, height, x, y):
+        i = i.resize((width, height), Image.ANTIALIAS)
+        img = ImageTk.PhotoImage(i)
+        panel = tk.Label(self.window, image=img)
+        panel.photo = img
+        panel.grid(column=240, row=90)
+        panel.place(x=x, y=y)
+
     def upload_image(self):
         if self.current_label is not None:
             self.current_label.destroy()
             self.current_label = None
         image_path = filedialog.askopenfilename()
         i = Image.open(image_path)
-        i = i.resize((300, 300), Image.ANTIALIAS)
-        img = ImageTk.PhotoImage(i)
-        panel = tk.Label(self.window, image=img)
-        panel.photo = img
-        panel.grid(column=240, row=90)
-        panel.place(x=300, y=90)
+        self.place_image(i, 300, 300, 300, 90)
 
         self.image_path_to_classify = image_path
         classify_button = tk.Button(self.window,
@@ -54,11 +57,13 @@ class Gui:
 
     def classify(self):
         with torch.no_grad():
-            class_prediction = self.fp.single_image_classify(self.image_path_to_classify)
-            print("this is a {}.".format(class_prediction))
-            mask_state = tk.Label(self.window, text="Mask State: " + class_prediction, font=('calibri', 14, 'bold'))
-            mask_state.place(x=300, y=400)
-            self.current_label = mask_state
+            class_predictions = self.fp.single_image_classify(self.image_path_to_classify)
+            for i, value in enumerate(class_predictions):
+                img, mask_usage = value
+                print("{}: this is a {}.".format(i, mask_usage))
+                mask_state = tk.Label(self.window, text="Mask State: " + mask_usage, font=('calibri', 14, 'bold'))
+                mask_state.place(x=300, y=450 + i*50)
+                self.current_label = mask_state
 
 
 if __name__ == '__main__':

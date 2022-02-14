@@ -39,11 +39,13 @@ class FinalProject:
             return False
         print("cropping image")
         imgs = objects_crop(image_path)
+        mask_usages = []
         print("single_image_classify got " + str(len([img for img in imgs])) + " faces to classify")
         for i, img in enumerate(imgs):
             mask_usage = classify_mask_usage(img, self.mask_model)
             imshow(img, str(i) + ": mask usage is " + str(mask_usage))
-        return mask_usage
+            mask_usages.append((img, mask_usage))
+        return mask_usages
 
 
 def train_models(human_model_path, mask_model_path, human_data_path, mask_data_path):
