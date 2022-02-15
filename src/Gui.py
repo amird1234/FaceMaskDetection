@@ -5,7 +5,8 @@ from tkinter import *
 import torch
 from PIL import Image, ImageTk
 from FinalProject import FinalProject
-
+from torchvision import transforms
+from FaceMaskClassificationUtils import imshow
 
 class Gui:
     def __init__(self, human_model_path, mask_model_path):
@@ -15,7 +16,7 @@ class Gui:
         # Creates the window from the imported Tkinter module
         self.window = tk.Tk()
         # Creates the size of the window
-        self.window.geometry("800x800")
+        self.window.geometry("1300x800")
         # Adds a title to the Windows GUI for the window
         self.window.title("Mask Classifier")
         title = tk.Label(self.window, foreground="black", text="Mask Classifier", font="30")
@@ -43,7 +44,7 @@ class Gui:
             self.current_label = None
         image_path = filedialog.askopenfilename()
         i = Image.open(image_path)
-        self.place_image(i, 300, 300, 300, 90)
+        self.place_image(i, 700, 700, 300, 90)
 
         self.image_path_to_classify = image_path
         classify_button = tk.Button(self.window,
@@ -57,13 +58,8 @@ class Gui:
 
     def classify(self):
         with torch.no_grad():
-            class_predictions = self.fp.single_image_classify(self.image_path_to_classify)
-            for i, value in enumerate(class_predictions):
-                img, mask_usage = value
-                print("{}: this is a {}.".format(i, mask_usage))
-                mask_state = tk.Label(self.window, text="Mask State: " + mask_usage, font=('calibri', 14, 'bold'))
-                mask_state.place(x=300, y=450 + i*50)
-                self.current_label = mask_state
+            class_predictions, orig_img = self.fp.single_image_classify(self.image_path_to_classify)
+            self.place_image(orig_img, 700, 700, 300, 90)
 
 
 if __name__ == '__main__':

@@ -1,7 +1,7 @@
 import argparse
 import torch
 from PIL import Image
-from FaceMaskClassificationUtils import DEVICE, test_transform, NUM_OF_FACEMASK_CLASSES, NUM_OF_OBJECTS_CLASSES, imshow
+from FaceMaskClassificationUtils import DEVICE, test_transform, NUM_OF_FACEMASK_CLASSES, NUM_OF_OBJECTS_CLASSES, imshow, draw_bounding_boxes
 from HumanDetection import classify_is_human, train_human_detection
 from FaceMaskDetection import classify_mask_usage, train_face_mask_detection
 from ObjectCrop import ObjectCrop
@@ -34,19 +34,24 @@ class FinalProject:
 
     def single_image_classify(self, image_path):
         print("trying to classify image " + str(image_path))
+        orig_img = Image.open(image_path)
         img = test_transform(Image.open(image_path))
         is_human = classify_is_human(img, self.human_model)
         if is_human is not True:
             return False
+        # TODO: is there a human in picture?
         print("cropping image")
         imgs = self.oc.objects_crop(image_path)
         mask_usages = []
         print("single_image_classify got " + str(len([img for img in imgs])) + " faces to classify")
+        np_bbox, _ = self.oc.bounding_box(orig_img)
         for i, img in enumerate(imgs):
             mask_usage = classify_mask_usage(img, self.mask_model)
             imshow(img, str(i) + ": mask usage is " + str(mask_usage))
             mask_usages.append((img, mask_usage))
-        return mask_usages
+            box = np_bbox[i]
+            orig_img = draw_bounding_boxes(orig_img, box, mask_usage)
+        return mask_usages, orig_img
 
 
 def train_models(human_model_path, mask_model_path, human_data_path, mask_data_path):

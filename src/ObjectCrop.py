@@ -19,3 +19,11 @@ class ObjectCrop:
         img_cropped = self.mtcnn(img)
 
         return img_cropped
+
+    def bounding_box(self, img):
+        """
+        bounding box coordinates
+        :param img: image in PIL format
+        :return: np array coordinates
+        """
+        return self.mtcnn.detect(img)
