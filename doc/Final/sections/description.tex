@@ -1,28 +1,3 @@
-In this project, the goal is to label all faces in the given image as mask/no mask. For example:
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.7\textwidth]{Orig.jpeg}
-    \caption{Original Image}
-    \label{fig:Orig}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.3\textwidth]{Person1.jpg}
-    \caption{First Image}
-    \label{fig:First}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.3\textwidth]{Person2.jpg}
-    \caption{Second Image}
-    \label{fig:Second}
-\end{figure}
-
-We'll need to determine which of these women is wearing a medical mask.
-
 \subsection{Approach}
 We are interested in labels
 \begin{itemize}
@@ -37,12 +12,6 @@ The problem with this approach is that face detector might be less accurate on f
 
 \subsection{The Solution}
 We will train a model with three classes:
-\begin{enumerate}
-    \item Face with mask
-    \item Face without mask
-    \item Not a face
-    \item Mask worn incorrectly (*will be hard to implement)
-\end{enumerate}
 
 and apply it “efficiently” to a larger input image.
 

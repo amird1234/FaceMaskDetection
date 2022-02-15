@@ -1,0 +1,76 @@
+\subsection{The Code}
+My project is consisted of the following components:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ll}
+        \midrule
+        \textbf{doc} & Documentation, source and pdf  \\
+        \textbf{out} & Saved Checkpoint - model \& state dict. \\
+        \textbf{samples} & Test images for Demo \\
+        \textbf{src} & Project's sources \\
+        \textbf{support} & Dockerfile to reproduce the required env. \\
+        \bottomrule
+    \end{tabular}
+    \caption{}
+    \label{tab:}
+\end{table}
+
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ll}
+        \midrule
+        \textbf{Camera.py} & Capture frames from Camera or Video  \\
+        \textbf{FaceMaskClassificationUtils.py} & Shared Helper and constants  \\
+        \textbf{FaceMaskDetection.py} & FaceMask classifier model   \\
+        \textbf{FinalProject.py} & train and classify without a GUI \\
+        \textbf{Gui.py} & A useful GUI assisting upload and classify images \\
+        \textbf{HumanDetection.py} & Human Detection Model \\
+        \textbf{ObjectCrop.py} & External Lib For Objects Detection \\
+        \bottomrule
+    \end{tabular}
+    \caption{}
+    \label{tab:2}
+\end{table}
+
+\subsection{How To Run The Project}
+
+\begin{itemize}
+\item Train the model and test it, export a checkpoint file for the model and weights
+\begin{verbatim}
+python src/FinalProject.py --help
+optional arguments:
+  -h, --help            show this help message and exit
+  -H HUMAN_MODEL_PATH, --human_model_path HUMAN_MODEL_PATH
+                        Human Model Path
+  -a HUMAN_DATA_PATH, --human_data_path HUMAN_DATA_PATH
+                        Human Data Path
+  -M MASK_MODEL_PATH, --mask_model_path MASK_MODEL_PATH
+                        Face Mask Model path
+  -b MASK_DATA_PATH, --mask_data_path MASK_DATA_PATH
+                        Face Mask Data path
+  -F IMAGE_PATH, --image_path IMAGE_PATH
+                        image to classify
+  --train
+
+\end{verbatim}
+
+\item{Run GUI to classify images selected by the user:}
+\begin{verbatim}
+python src/Gui.py --help
+optional arguments:
+  -h, --help            show this help message and exit
+  -H HUMAN_MODEL_PATH, --human_model_path HUMAN_MODEL_PATH
+                        Human Model Path
+  -M MASK_MODEL_PATH, --mask_model_path MASK_MODEL_PATH
+                        Face Mask Model path
+
+\end{verbatim}
+\end{itemize}
+
+Prerequisites:
+\begin{itemize}
+    \item Pre trained model checkpoint (Model \& weights)
+    \item Project's Python source code
+\end{itemize}

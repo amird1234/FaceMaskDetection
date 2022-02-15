@@ -1,3 +1,16 @@
 \babel@toc {english}{}
-\contentsline {section}{\numberline {1}Gui}{2}{section.1}%
-\contentsline {section}{\numberline {2}Bibliography}{4}{section.2}%
+\contentsline {section}{\numberline {1}Goals}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Expected Achievements}{4}{subsection.1.1}%
+\contentsline {section}{\numberline {2}Data}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Datasets}{5}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Face Mask Detection Dataset \cite {face-mask-detection}}{5}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Face Mask Dataset \cite {face-mask-detection} \& Natural Images Dataset \cite {natural-images}}{5}{subsubsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.2}Transformations used for data}{6}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Architecture}{7}{section.3}%
+\contentsline {subsection}{\numberline {3.1}The Model}{7}{subsection.3.1}%
+\contentsline {section}{\numberline {4}Results}{8}{section.4}%
+\contentsline {section}{\numberline {5}Gui}{10}{section.5}%
+\contentsline {section}{\numberline {6}Bibliography}{11}{section.6}%
+\contentsline {section}{\numberline {7}Appendixes}{11}{section.7}%
+\contentsline {subsection}{\numberline {7.1}The Code}{12}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}How To Run The Project}{12}{subsection.7.2}%

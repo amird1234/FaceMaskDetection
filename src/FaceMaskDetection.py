@@ -2,6 +2,7 @@ import copy
 import os
 
 import numpy as np
+import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -10,6 +11,7 @@ from torch.optim import lr_scheduler
 from torchvision import datasets, transforms
 from torchvision import models
 from FaceMaskClassificationUtils import imshow, std, mean, DEVICE, NUM_OF_FACEMASK_CLASSES, CPU_DEVICE
+
 
 mask_class_names_list = ['mask_weared_incorrect', 'with_mask', 'without_mask']
 MODEL_PATH = '/content/drive/MyDrive/colab/FaceMaskDetection/out/MaskModel.pth'
@@ -94,7 +96,7 @@ def print_labeled_samples(dataloaders, class_names):
     imshow(out, title=[class_names[x] for x in classes])
 
 
-class Amir(nn.Module):
+class CNN(nn.Module):
     def __init__(self):
         super().__init__()
         self.nclasses = NUM_OF_FACEMASK_CLASSES
@@ -129,19 +131,17 @@ class Amir(nn.Module):
 
 def train_model(model, criterion, optimizer, scheduler, num_epochs, dataloaders, total_batch_sizes):
     model = model.to(DEVICE)
-
     best_acc = 0.0
     best_model_wts = copy.deepcopy(model.state_dict())
+    best_epoch = 0
+    measurements = {'Loss': {'train': [], 'validation': []}, 'Accuracy': {'train': [], 'validation': []}}
 
     for epoch in range(num_epochs):
-
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
 
         for phase in ['train', 'validation']:
-
             if phase == 'train':
-
                 scheduler.step()
                 model.train()
 
@@ -150,7 +150,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs, dataloaders,
 
             running_loss = 0.0
             running_corrects = 0
-            i = 0
+
             for inputs, labels in dataloaders[phase]:
                 inputs = inputs.to(DEVICE)
                 labels = labels.to(DEVICE)
@@ -158,7 +158,6 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs, dataloaders,
                 optimizer.zero_grad()
 
                 with torch.set_grad_enabled(phase == 'train'):
-
                     outputs = model(inputs)
                     _, preds = torch.max(outputs, 1)
                     loss = criterion(outputs, labels)
@@ -176,17 +175,36 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs, dataloaders,
             print('{} Loss: {:.4f} Acc: {:.4f}'.format(
                 phase, epoch_loss, epoch_acc))
 
+            # save measurements for later
+            measurements['Accuracy'][phase].append(epoch_acc)
+            measurements['Loss'][phase].append(epoch_loss)
+
+
             if phase == 'validation' and epoch_acc > best_acc:
+                best_epoch = epoch
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
 
     print('Training complete')
     print('Best val Acc: {:4f}'.format(best_acc))
 
+    for m in measurements:
+        for phase in ['train', 'validation']:
+            plt.clf()
+            plt.figure(figsize=(6, 6))
+            plt.plot([x for x in range(len(measurements[m][phase]))], measurements[m][phase], '-')
+            if m == 'Accuracy':
+                plt.plot(best_epoch, measurements[m][phase][best_epoch].item(), 'g*')
+            else:
+                plt.plot(best_epoch, measurements[m][phase][best_epoch], 'g*')
+            plt.title(phase + " " + m)
+            #plt.show()
+            plt.savefig(os.path.join('/home/adahan/Project/report/', "FaceMask" + '-' + phase + '-' + m + '.png'))
+            plt.clf()
+
     model.load_state_dict(best_model_wts)
 
     return model
-
 
 def evaluation(dataloaders, model, class_names):
     with torch.no_grad():
@@ -209,7 +227,7 @@ def evaluation(dataloaders, model, class_names):
         inputs, labels = iter(dataloaders['test']).next()
         inputs = inputs.to(DEVICE)
 
-        inp = torchvision.utils.make_grid(inputs)
+        # inp = torchvision.utils.make_grid(inputs)
 
         outputs = model(inputs)
         _, preds = torch.max(outputs, 1)
@@ -242,7 +260,7 @@ def train_face_mask_detection(model_path=MODEL_PATH, data_dir=_data_dir):
     :return: path to the model
     """
     dataloaders, total_batch_sizes, class_names = split_prepare_dataset(data_dir)
-    print_labeled_samples(dataloaders, class_names)
+    # print_labeled_samples(dataloaders, class_names)
 
     model = models.resnet18(pretrained=True)
     num_ftrs = model.fc.in_features
