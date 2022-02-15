@@ -59,6 +59,11 @@ class Gui:
     def classify(self):
         with torch.no_grad():
             class_predictions, orig_img = self.fp.single_image_classify(self.image_path_to_classify)
+            if class_predictions is None or orig_img is None:
+                mask_state = tk.Label(self.window, text="Non human detected", font=('calibri', 14, 'bold'))
+                mask_state.place(x=300, y=750)
+                self.current_label = mask_state
+                return
             self.place_image(orig_img, 700, 700, 300, 90)
 
 

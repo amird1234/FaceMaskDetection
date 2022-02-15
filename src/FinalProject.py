@@ -38,10 +38,12 @@ class FinalProject:
         img = test_transform(Image.open(image_path))
         is_human = classify_is_human(img, self.human_model)
         if is_human is not True:
-            return False
+            return None, None
         # TODO: is there a human in picture?
         print("cropping image")
         imgs = self.oc.objects_crop(image_path)
+        if imgs is None:
+            return None, None
         mask_usages = []
         print("single_image_classify got " + str(len([img for img in imgs])) + " faces to classify")
         np_bbox, _ = self.oc.bounding_box(orig_img)
@@ -93,7 +95,7 @@ if __name__ == '__main__':
         print("FinalProject: shouldn't train")
 
     start = time.time()
-    fp = load_models(args.human_model_path, args.mask_model_path)
+    fp = FinalProject(args.human_model_path, args.mask_model_path)
     end = time.time()
     print("FinalProject: loading models took " + str(datetime.timedelta(seconds=(end - start))))
 
