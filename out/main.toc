@@ -8,6 +8,8 @@
 \contentsline {subsection}{\numberline {2.2}Transformations used for data}{6}{subsection.2.2}%
 \contentsline {section}{\numberline {3}Architecture}{7}{section.3}%
 \contentsline {subsection}{\numberline {3.1}The Model}{7}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Training}{8}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Testing Pipeline}{8}{subsection.3.3}%
 \contentsline {section}{\numberline {4}Results}{8}{section.4}%
 \contentsline {section}{\numberline {5}Gui}{10}{section.5}%
 \contentsline {section}{\numberline {6}Bibliography}{11}{section.6}%

@@ -18,3 +18,12 @@ The problem with this method was that it take a lot of RAM (over 4GB), which mad
     \caption{optimizer}
     \label{fig:optimizer}
 \end{figure}
+
+\subsection{Training}
+
+\subsection{Testing Pipeline}
+\begin{itemize}
+    \item Take an image
+    \item Determine if the object/s in the picture are human (using Human Detection Model model)
+    \item Crop the object/s one by one (using first model), \& determine masked/non-masked/partially-masked (using second model)
+\end{itemize}
