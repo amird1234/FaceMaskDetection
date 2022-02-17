@@ -1,5 +1,6 @@
 import os
 import argparse
+from PIL import Image
 
 import numpy as np
 import torch
@@ -9,10 +10,9 @@ import torchvision
 from torch.optim import lr_scheduler
 from torchvision import models
 from FaceMaskClassificationUtils import imshow, DEVICE, CPU_DEVICE, split_prepare_dataset, CNN, train_model, evaluation, test_transform
-from PIL import Image
 
 
-natural_image_class_names_list = ['airplane', 'car', 'cat', 'dog', 'flower', 'fruit','motorbike', 'person']
+natural_image_class_names_list = ['airplane', 'car', 'cat', 'dog', 'flower', 'fruit', 'motorbike', 'person']
 NUM_OF_NATURAL_IMAGE_CLASSES = len(natural_image_class_names_list)
 
 batch_size = 8
@@ -47,7 +47,7 @@ def classify_natural_image(image_path, model):
         return mask
 
 
-def train_natural_image_detection(model_path, data_dir, class_num):
+def train_natural_image_detection(model_path, data_dir):
     """
     train the model
     :return: path to the model
@@ -56,7 +56,7 @@ def train_natural_image_detection(model_path, data_dir, class_num):
 
     model = models.resnet18(pretrained=True)
     num_ftrs = model.fc.in_features
-    model.fc = nn.Linear(num_ftrs, class_num)
+    model.fc = nn.Linear(num_ftrs, NUM_OF_NATURAL_IMAGE_CLASSES)
 
     criterion = nn.CrossEntropyLoss()
     optimizer_ft = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
@@ -71,6 +71,8 @@ def train_natural_image_detection(model_path, data_dir, class_num):
     if os.path.exists(model_path):
         os.remove(model_path)
     torch.save(checkpoint, model_path)
+
+    return model
 
 
 def load_natural_image_model(model_path, class_num):

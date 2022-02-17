@@ -5,15 +5,15 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.optim import lr_scheduler
 from torchvision import models
-from FaceMaskClassificationUtils import DEVICE, NUM_OF_FACEMASK_CLASSES, CPU_DEVICE, train_model, split_prepare_dataset, evaluation
-
+from FaceMaskClassificationUtils import DEVICE, CPU_DEVICE, train_model, split_prepare_dataset, evaluation
 
 mask_class_names_list = ['mask_weared_incorrect', 'with_mask', 'without_mask']
+NUM_OF_FACEMASK_CLASSES = len(mask_class_names_list)
 
 batch_size = 8
 num_workers = 4
 
-_num_epochs = 10
+_num_epochs = 15
 _train_size, _validation_size, _test_size = 0.7, 0.15, 0.15
 
 
@@ -41,7 +41,7 @@ def train_face_mask_detection(model_path, data_dir):
     dataloaders, total_batch_sizes, class_names = split_prepare_dataset(data_dir, num_workers, batch_size)
     # print_labeled_samples(dataloaders, class_names)
 
-    model = models.resnet18(pretrained=True)
+    model = models.resnet18(pretrained=False)
     num_ftrs = model.fc.in_features
     model.fc = nn.Linear(num_ftrs, NUM_OF_FACEMASK_CLASSES)
 
@@ -60,6 +60,16 @@ def train_face_mask_detection(model_path, data_dir):
     if os.path.exists(model_path):
         os.remove(model_path)
     torch.save(checkpoint, model_path)
+
+def load_face_mask_model(mask_model_path):
+    checkpoint = torch.load(mask_model_path, map_location=DEVICE)
+    mask_model = checkpoint['model']
+    num_ftrs = mask_model.fc.in_features
+    mask_model.fc = nn.Linear(num_ftrs, NUM_OF_FACEMASK_CLASSES)
+    mask_model.load_state_dict(checkpoint['state_dict'])
+    mask_model.eval()
+    print("mask model successfully loaded")
+    return mask_model
 
 
 if __name__ == "__main__":

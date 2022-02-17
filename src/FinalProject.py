@@ -1,9 +1,10 @@
 import argparse
 import torch
 from PIL import Image
-from FaceMaskClassificationUtils import DEVICE, test_transform, NUM_OF_FACEMASK_CLASSES, NUM_OF_OBJECTS_CLASSES, imshow, draw_bounding_boxes
-from HumanDetection import classify_is_human, train_human_detection
-from FaceMaskDetection import classify_mask_usage, train_face_mask_detection
+from FaceMaskClassificationUtils import test_transform, imshow, draw_bounding_boxes
+from HumanDetection import classify_is_human, train_human_detection, load_human_model, retrain_human_model
+from FaceMaskDetection import classify_mask_usage, train_face_mask_detection, load_face_mask_model
+from NaturalImages import train_natural_image_detection
 from ObjectCrop import ObjectCrop
 import torch.nn as nn
 import time
@@ -12,25 +13,9 @@ import datetime
 
 class FinalProject:
     def __init__(self, human_model_path, mask_model_path):
-        checkpoint = torch.load(human_model_path, map_location=DEVICE)
-        human_model = checkpoint['model']
-        num_ftrs = human_model.fc.in_features
-        human_model.fc = nn.Linear(num_ftrs, NUM_OF_OBJECTS_CLASSES)
-        human_model.load_state_dict(checkpoint['state_dict'])
-        human_model.eval()
-        print("human model successfully loaded")
-
-        checkpoint = torch.load(mask_model_path, map_location=DEVICE)
-        mask_model = checkpoint['model']
-        num_ftrs = mask_model.fc.in_features
-        mask_model.fc = nn.Linear(num_ftrs, NUM_OF_FACEMASK_CLASSES)
-        mask_model.load_state_dict(checkpoint['state_dict'])
-        mask_model.eval()
-        print("mask model successfully loaded")
-
+        self.human_model = load_human_model(human_model_path)
+        self.mask_model = load_face_mask_model(mask_model_path)
         self.oc = ObjectCrop()
-        self.human_model = human_model
-        self.mask_model = mask_model
 
     def single_image_classify(self, image_path):
         print("trying to classify image " + str(image_path))
@@ -56,10 +41,19 @@ class FinalProject:
         return mask_usages, orig_img
 
 
-def train_models(human_model_path, mask_model_path, human_data_path, mask_data_path):
-    print("train_models: Training both models")
+def train_models(human_model_path, mask_model_path,
+                 human_data_path, mask_data_path,
+                 natural_model_path, natural_data_path):
+    print("train_models: Training all models")
+
     train_start = time.time()
-    train_human_detection(human_model_path, human_data_path)
+    natural_model = train_natural_image_detection(natural_model_path, natural_data_path)
+    train_end = time.time()
+    print("FinalProject: training human model took " + str(datetime.timedelta(seconds=(train_end - train_start))))
+
+    train_start = time.time()
+    # train_human_detection(human_model_path, human_data_path)
+    retrain_human_model(human_model_path, human_data_path, natural_model)
     train_end = time.time()
     print("FinalProject: training human model took " + str(datetime.timedelta(seconds=(train_end - train_start))))
 
@@ -82,6 +76,8 @@ if __name__ == '__main__':
     parser.add_argument('-a', '--human_data_path', help='Human Data Path', required=False)
     parser.add_argument('-M', '--mask_model_path', help='Face Mask Model path', required=True)
     parser.add_argument('-b', '--mask_data_path', help='Face Mask Data path', required=False)
+    parser.add_argument('-N', '--natural_model_path', help='Natural Images Model path', required=True)
+    parser.add_argument('-c', '--natural_data_path', help='Natural Images Data path', required=False)
     parser.add_argument('-F', '--image_path', help='image to classify', required=True)
     parser.add_argument('--train', dest='train', action='store_true')
     parser.set_defaults(train=False)
@@ -90,7 +86,7 @@ if __name__ == '__main__':
 
     if args.train:
         print("FinalProject: should train")
-        train_models(args.human_model_path, args.mask_model_path, args.human_data_path, args.mask_data_path)
+        train_models(args.human_model_path, args.mask_model_path, args.human_data_path, args.mask_data_path, args.natural_model_path, args.natural_data_path)
     else:
         print("FinalProject: shouldn't train")
 
