@@ -14,7 +14,7 @@ NUM_OF_FACEMASK_CLASSES = len(mask_class_names_list)
 batch_size = 8
 num_workers = 4
 
-_num_epochs = 15
+_num_epochs = 25
 _train_size, _validation_size, _test_size = 0.7, 0.15, 0.15
 
 

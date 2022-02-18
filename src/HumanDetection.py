@@ -45,7 +45,6 @@ def classify_is_human(img, model):
     """
     print("classify if it is human")
     with torch.no_grad():
-        print(CPU_DEVICE)
         img = img.to(CPU_DEVICE)
         model.to(CPU_DEVICE)
         class_prediction = torch.argmax(model(img.unsqueeze(0))).item()

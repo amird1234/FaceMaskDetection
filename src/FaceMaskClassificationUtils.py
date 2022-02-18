@@ -2,13 +2,14 @@ import copy
 import os
 
 import matplotlib.pyplot as plt
-from PIL import ImageFont, ImageDraw
+from PIL import ImageFont, ImageDraw, Image
 
 import torch
 import numpy as np
 from torchvision import datasets, transforms
 import torchvision
 import torch.nn as nn
+
 
 MODEL_PATH = '/content/drive/MyDrive/colab/GenderClassification/New/output/model.pth'
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
