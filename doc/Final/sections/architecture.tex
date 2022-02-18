@@ -20,6 +20,30 @@ The problem with this method was that it take a lot of RAM (over 4GB), which mad
 \end{figure}
 
 \subsection{Training}
+The training phase includes three models:
+\begin{enumerate}
+    \item \label{NI} Natural Image:
+    \begin{itemize}
+        \item A Pre-Trained Model that detects human beings (alongside other)
+        \item Isn't being used for final classification
+        \item Used for Human Model Retraining
+    \end{itemize}
+    \item Human Model
+    \begin{itemize}
+        \item Fine tune \ref{NI} model's top layer
+        \item Classes: elaborated in \ref{firstModel}
+        \item Add three classes (with\_mask, without\_mask, mask\_weared\_incorrect
+        \item Remove 'person' class in return
+        \item Used to determine if the object is a person
+    \end{itemize}
+    \item Face Mask Detection
+    \begin{itemize}
+        \item A model we train from scratch
+        \item Classes: elaborated in \ref{secondModel}
+        \item Used for Human Model Retraining
+    \end{itemize}
+\end{enumerate}
+
 
 \subsection{Testing Pipeline}
 \begin{itemize}
