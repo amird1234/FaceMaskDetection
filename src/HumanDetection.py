@@ -7,7 +7,7 @@ import torchvision
 from torch.optim import lr_scheduler
 from torchvision import models
 
-from FaceMaskClassificationUtils import imshow, DEVICE, CPU_DEVICE, evaluation, split_prepare_dataset, train_model, print_labeled_samples
+from FaceMaskClassificationUtils import DEVICE, CPU_DEVICE, evaluation, split_prepare_dataset, train_model
 
 combined_class_names_list = ['airplane', 'car', 'cat', 'dog', 'flower', 'fruit', 'mask_weared_incorrect', 'motorbike',
                              'with_mask', 'without_mask']
@@ -77,8 +77,6 @@ def train_human_detection(model_path, data_dir, start_with_model=None):
         model = start_with_model
     num_ftrs = model.fc.in_features
     model.fc = nn.Linear(num_ftrs, NUM_OF_OBJECTS_CLASSES)
-
-    #print(model)
 
     criterion = nn.CrossEntropyLoss()
     optimizer_ft = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)

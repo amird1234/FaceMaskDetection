@@ -1,14 +1,13 @@
 import argparse
-import torch
 from PIL import Image
+import time
+import datetime
+
 from FaceMaskClassificationUtils import test_transform, imshow, draw_bounding_boxes
 from HumanDetection import classify_is_human, train_human_detection, load_human_model, retrain_human_model
 from FaceMaskDetection import classify_mask_usage, train_face_mask_detection, load_face_mask_model
 from NaturalImages import train_natural_image_detection
 from ObjectCrop import ObjectCrop
-import torch.nn as nn
-import time
-import datetime
 
 
 class FinalProject:

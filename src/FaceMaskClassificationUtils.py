@@ -14,8 +14,6 @@ MODEL_PATH = '/content/drive/MyDrive/colab/GenderClassification/New/output/model
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 CPU_DEVICE = torch.device("cpu")
 
-NUM_OF_OBJECTS_CLASSES = 10
-
 mean = [0.485, 0.456, 0.406]
 std = [0.229, 0.224, 0.225]
 
