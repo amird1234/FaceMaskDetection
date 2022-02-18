@@ -1,217 +1,203 @@
-(venv36) adahan@kodkoda4:~$ cd ~/Project/ && time python src/FinalProject.py -H out/CombinedModel2.pth -M out/MaskModel2.pth -a data/human/ -b data/face-mask/ -N out/NaturalNodel2.pth -c data/natural_images -F samples/twoWomen.jpeg --train
+(venv36) adahan@kodkoda4:~/Project$ cd ~/Project/ && time python src/FinalProject.py -H out/CombinedModel2.pth -M out/MaskModel2.pth -a data/human/ -b data/face-mask/ -N out/NaturalNodel2.pth -c data/natural_images -F samples/twoWomen.jpeg --train
 Namespace(human_data_path='data/human/', human_model_path='out/CombinedModel2.pth', image_path='samples/twoWomen.jpeg', mask_data_path='data/face-mask/', mask_model_path='out/MaskModel2.pth', natural_data_path='data/natural_images', natural_model_path='out/NaturalNodel2.pth', train=True)
 FinalProject: should train
 train_models: Training all models
 len: train valid test:4829 1034 1036
 dataset is now 4829
-<torch.utils.data.dataset.Subset object at 0x7f9d13e63cf8>
-<torch.utils.data.dataset.Subset object at 0x7f9d13e63c50>
+<torch.utils.data.dataset.Subset object at 0x7f4f0c0cbe48>
+<torch.utils.data.dataset.Subset object at 0x7f4f0c0cbda0>
 Class Names: ['airplane', 'car', 'cat', 'dog', 'flower', 'fruit', 'motorbike', 'person']
 Epoch 0/9
 ----------
 /home/adahan/venv36/lib/python3.6/site-packages/torch/optim/lr_scheduler.py:134: UserWarning: Detected call of `lr_scheduler.step()` before `optimizer.step()`. In PyTorch 1.1.0 and later, you should call them in the opposite order: `optimizer.step()` before `lr_scheduler.step()`.  Failure to do this will result in PyTorch skipping the first value of the learning rate schedule. See more details at https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate
   "https://pytorch.org/docs/stable/optim.html#how-to-adjust-learning-rate", UserWarning)
-train Loss: 2.9484 Acc: 0.8775
-validation Loss: 0.9065 Acc: 0.9577
+train Loss: 2.9417 Acc: 0.8853
+validation Loss: 0.6777 Acc: 0.9548
 Epoch 1/9
 ----------
-train Loss: 1.5382 Acc: 0.9346
-validation Loss: 0.5306 Acc: 0.9702
+train Loss: 1.6065 Acc: 0.9300
+validation Loss: 0.5176 Acc: 0.9692
 Epoch 2/9
 ----------
-train Loss: 1.3112 Acc: 0.9470
-validation Loss: 0.4790 Acc: 0.9740
+train Loss: 1.1933 Acc: 0.9493
+validation Loss: 0.6031 Acc: 0.9654
 Epoch 3/9
 ----------
-train Loss: 1.0555 Acc: 0.9555
-validation Loss: 0.4862 Acc: 0.9721
+train Loss: 0.9455 Acc: 0.9590
+validation Loss: 0.6156 Acc: 0.9663
 Epoch 4/9
 ----------
-train Loss: 0.8880 Acc: 0.9619
-validation Loss: 0.4840 Acc: 0.9712
+train Loss: 1.0216 Acc: 0.9536
+validation Loss: 0.3676 Acc: 0.9798
 Epoch 5/9
 ----------
-train Loss: 0.8511 Acc: 0.9601
-validation Loss: 0.5446 Acc: 0.9702
+train Loss: 0.8344 Acc: 0.9650
+validation Loss: 0.8719 Acc: 0.9615
 Epoch 6/9
 ----------
-train Loss: 0.6867 Acc: 0.9685
-validation Loss: 0.5385 Acc: 0.9721
+train Loss: 0.7237 Acc: 0.9698
+validation Loss: 0.5458 Acc: 0.9615
 Epoch 7/9
 ----------
-train Loss: 0.6077 Acc: 0.9737
-validation Loss: 0.4647 Acc: 0.9702
+train Loss: 0.6242 Acc: 0.9758
+validation Loss: 0.4150 Acc: 0.9769
 Epoch 8/9
 ----------
-train Loss: 0.6063 Acc: 0.9737
-validation Loss: 0.3854 Acc: 0.9788
+train Loss: 0.6238 Acc: 0.9739
+validation Loss: 0.3973 Acc: 0.9721
 Epoch 9/9
 ----------
-train Loss: 0.5651 Acc: 0.9754
-validation Loss: 0.4085 Acc: 0.9798
+train Loss: 0.5608 Acc: 0.9752
+validation Loss: 0.3100 Acc: 0.9798
 Training complete
 Best val Acc: 0.979808
-Accuracy of the model on the test images: 98.55212355212355%
-Acutal label dog
-Acutal label fruit
-Acutal label dog
-Acutal label fruit
-Acutal label flower
-Acutal label fruit
-Acutal label car
+saving report to /home/adahan/Project/Reports
+Accuracy of the model on the test images: 97.68339768339769%
 Acutal label person
-FinalProject: training human model took 0:05:34.950765
+Acutal label person
+Acutal label airplane
+Acutal label flower
+Acutal label car
+Acutal label airplane
+Acutal label fruit
+Acutal label person
+FinalProject: training human model took 0:05:33.278217
 len: train valid test:10426 2234 2235
 dataset is now 10426
-<torch.utils.data.dataset.Subset object at 0x7f9cde3dc630>
-<torch.utils.data.dataset.Subset object at 0x7f9cb6caf1d0>
+<torch.utils.data.dataset.Subset object at 0x7f4f26a42898>
+<torch.utils.data.dataset.Subset object at 0x7f4f017e1ba8>
 Class Names: ['airplane', 'car', 'cat', 'dog', 'flower', 'fruit', 'mask_weared_incorrect', 'motorbike', 'with_mask', 'without_mask']
 Retraining Natural model --> Human Model
 Epoch 0/9
 ----------
-train Loss: 2.8105 Acc: 0.8822
-validation Loss: 1.1246 Acc: 0.9473
+train Loss: 2.8346 Acc: 0.8809
+validation Loss: 1.3427 Acc: 0.9384
 Epoch 1/9
 ----------
-train Loss: 1.6708 Acc: 0.9274
-validation Loss: 0.8846 Acc: 0.9562
+train Loss: 1.6814 Acc: 0.9275
+validation Loss: 1.1567 Acc: 0.9473
 Epoch 2/9
 ----------
-train Loss: 1.3821 Acc: 0.9404
-validation Loss: 1.0806 Acc: 0.9491
+train Loss: 1.5280 Acc: 0.9340
+validation Loss: 1.1885 Acc: 0.9473
 Epoch 3/9
 ----------
-train Loss: 1.2697 Acc: 0.9488
-validation Loss: 0.9409 Acc: 0.9607
+train Loss: 1.2607 Acc: 0.9461
+validation Loss: 0.9578 Acc: 0.9576
 Epoch 4/9
 ----------
-train Loss: 1.0723 Acc: 0.9542
-validation Loss: 0.8122 Acc: 0.9621
+train Loss: 1.1795 Acc: 0.9492
+validation Loss: 0.7827 Acc: 0.9629
 Epoch 5/9
 ----------
-train Loss: 1.0851 Acc: 0.9529
-validation Loss: 0.7978 Acc: 0.9598
+train Loss: 1.0896 Acc: 0.9519
+validation Loss: 0.8838 Acc: 0.9562
 Epoch 6/9
 ----------
-train Loss: 0.8692 Acc: 0.9629
-validation Loss: 0.5987 Acc: 0.9705
+train Loss: 0.7846 Acc: 0.9659
+validation Loss: 0.4699 Acc: 0.9768
 Epoch 7/9
 ----------
-train Loss: 0.6836 Acc: 0.9704
-validation Loss: 0.5560 Acc: 0.9723
+train Loss: 0.7194 Acc: 0.9675
+validation Loss: 0.5751 Acc: 0.9714
 Epoch 8/9
 ----------
-train Loss: 0.6574 Acc: 0.9733
-validation Loss: 0.6040 Acc: 0.9696
+train Loss: 0.6655 Acc: 0.9722
+validation Loss: 0.5379 Acc: 0.9754
 Epoch 9/9
 ----------
-train Loss: 0.7060 Acc: 0.9700
-validation Loss: 0.4608 Acc: 0.9768
+train Loss: 0.6135 Acc: 0.9731
+validation Loss: 0.5691 Acc: 0.9723
 Training complete
 Best val Acc: 0.976786
-Accuracy of the model on the test images: 98.38926174496645%
-Acutal label motorbike
+saving report to /home/adahan/Project/Reports
+Accuracy of the model on the test images: 97.53914988814317%
 Acutal label with_mask
+Acutal label without_mask
 Acutal label mask_weared_incorrect
-Acutal label mask_weared_incorrect
+Acutal label cat
 /home/adahan/Project/src/FaceMaskClassificationUtils.py:44: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
   plt.figure(figsize=(12, 6))
+Acutal label airplane
+Acutal label mask_weared_incorrect
 Acutal label without_mask
-Acutal label dog
-Acutal label dog
-Acutal label car
-FinalProject: training human model took 0:11:47.575209
+Acutal label without_mask
+FinalProject: training human model took 0:11:46.140550
 len: train valid test:6287 1347 1348
 dataset is now 6287
-<torch.utils.data.dataset.Subset object at 0x7f9c94280cf8>
-<torch.utils.data.dataset.Subset object at 0x7f9cd008b978>
+<torch.utils.data.dataset.Subset object at 0x7f4efcae9dd8>
+<torch.utils.data.dataset.Subset object at 0x7f4efd975e48>
 Class Names: ['mask_weared_incorrect', 'with_mask', 'without_mask']
 Epoch 0/14
 ----------
-train Loss: 3.0910 Acc: 0.8556
-validation Loss: 1.6879 Acc: 0.9342
+train Loss: 5.3648 Acc: 0.7322
+validation Loss: 3.7707 Acc: 0.8291
 Epoch 1/14
 ----------
-train Loss: 1.8274 Acc: 0.9167
-validation Loss: 0.9634 Acc: 0.9534
+train Loss: 4.2750 Acc: 0.7945
+validation Loss: 3.1423 Acc: 0.8499
 Epoch 2/14
 ----------
-train Loss: 1.6368 Acc: 0.9346
-validation Loss: 1.0607 Acc: 0.9490
+train Loss: 3.7710 Acc: 0.8201
+validation Loss: 2.7390 Acc: 0.8720
 Epoch 3/14
 ----------
-train Loss: 1.2848 Acc: 0.9455
-validation Loss: 0.6754 Acc: 0.9667
+train Loss: 3.2413 Acc: 0.8526
+validation Loss: 3.3482 Acc: 0.8395
 Epoch 4/14
 ----------
-train Loss: 1.2225 Acc: 0.9475
-validation Loss: 0.6870 Acc: 0.9608
+train Loss: 2.9736 Acc: 0.8634
+validation Loss: 3.2115 Acc: 0.8476
 Epoch 5/14
 ----------
-train Loss: 1.1165 Acc: 0.9475
-validation Loss: 0.7503 Acc: 0.9638
+train Loss: 2.6916 Acc: 0.8775
+validation Loss: 2.5462 Acc: 0.8802
 Epoch 6/14
 ----------
-train Loss: 0.7711 Acc: 0.9682
-validation Loss: 0.5388 Acc: 0.9667
+train Loss: 2.1387 Acc: 0.9039
+validation Loss: 2.0567 Acc: 0.9105
 Epoch 7/14
 ----------
-train Loss: 0.6567 Acc: 0.9720
-validation Loss: 0.5924 Acc: 0.9675
+train Loss: 2.1508 Acc: 0.9060
+validation Loss: 2.1141 Acc: 0.8979
 Epoch 8/14
 ----------
-train Loss: 0.7044 Acc: 0.9709
-validation Loss: 0.4303 Acc: 0.9793
+train Loss: 1.9891 Acc: 0.9128
+validation Loss: 1.8307 Acc: 0.9142
 Epoch 9/14
 ----------
-train Loss: 0.6508 Acc: 0.9707
-validation Loss: 0.3832 Acc: 0.9800
+train Loss: 1.9145 Acc: 0.9149
+validation Loss: 1.7636 Acc: 0.9201
 Epoch 10/14
 ----------
-train Loss: 0.6114 Acc: 0.9725
-validation Loss: 0.4080 Acc: 0.9793
+train Loss: 1.8351 Acc: 0.9219
+validation Loss: 1.8861 Acc: 0.9157
 Epoch 11/14
 ----------
-train Loss: 0.6083 Acc: 0.9746
-validation Loss: 0.4724 Acc: 0.9749
+train Loss: 1.9611 Acc: 0.9132
+validation Loss: 1.8190 Acc: 0.9157
 Epoch 12/14
 ----------
-train Loss: 0.6031 Acc: 0.9766
-validation Loss: 0.3046 Acc: 0.9830
+train Loss: 1.8162 Acc: 0.9219
+validation Loss: 1.8466 Acc: 0.9194
 Epoch 13/14
 ----------
-train Loss: 0.5455 Acc: 0.9765
-validation Loss: 0.3870 Acc: 0.9793
+train Loss: 1.8300 Acc: 0.9208
+validation Loss: 1.8547 Acc: 0.9157
 Epoch 14/14
 ----------
-train Loss: 0.5719 Acc: 0.9766
-validation Loss: 0.4055 Acc: 0.9808
+train Loss: 1.7512 Acc: 0.9246
+validation Loss: 1.7185 Acc: 0.9290
 Training complete
-Best val Acc: 0.982988
-Accuracy of the model on the test images: 97.77448071216617%
-Acutal label mask_weared_incorrect
-Acutal label mask_weared_incorrect
-Acutal label mask_weared_incorrect
+Best val Acc: 0.928994
+saving report to /home/adahan/Project/Reports
+Accuracy of the model on the test images: 93.32344213649851%
 Acutal label with_mask
-Acutal label with_mask
-Acutal label mask_weared_incorrect
+Acutal label without_mask
 Acutal label with_mask
 Acutal label mask_weared_incorrect
-FinalProject: training mask model took 0:10:40.165438
-human model successfully loaded
-mask model successfully loaded
-FinalProject: loading models took 0:00:00.158437
-trying to classify image samples/twoWomen.jpeg
-classify if it is human
-cpu
-classify_is_human: this is a with_mask.
-classify_is_human: it is human
-cropping image
-single_image_classify got 2 faces to classify
-classify_mask_usage: this is a without_mask.
-classify_mask_usage: this is a without_mask.
-FinalProject: testing image took 0:00:00.349358
-
-real	28m6.589s
-user	45m7.109s
-sys	7m40.521s
+Acutal label with_mask
+Acutal label without_mask
+Acutal label without_mask
+Acutal label mask_weared_incorrect
+FinalProject: training mask model took 0:10:39.202284

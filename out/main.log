@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.5.28)  18 FEB 2022 15:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.5.28)  18 FEB 2022 19:28
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -571,11 +571,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
  <./images/Orig.jpeg>]) (./sections/data.tex
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ifnextchar' on input line 3.
-
-
-Package hyperref Warning: Suppressing link with empty target on input line 6.
+Package hyperref Warning: Suppressing link with empty target on input line 2.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -588,6 +584,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [4 <./images/twoImage-Annotated.png>]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\@ifnextchar' on input line 3.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\@ifnextchar' on input line 19.
 
 
@@ -595,7 +595,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\@ifnextchar' on input line 19.
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 39.
+Package hyperref Warning: Suppressing link with empty target on input line 36.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -606,7 +606,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [5]
-<images/Person1.jpg, id=142, 256.96pt x 256.96pt>
+<images/Person1.jpg, id=143, 256.96pt x 256.96pt>
 File: images/Person1.jpg Graphic file (type jpg)
 <use images/Person1.jpg>
 Package pdftex.def Info: images/Person1.jpg  used on input line 57.
@@ -624,7 +624,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [6 <./images/Person1.jpg>]
-<images/architecture.png, id=148, 816.04875pt x 433.62pt>
+<images/architecture.png, id=149, 816.04875pt x 433.62pt>
 File: images/architecture.png Graphic file (type png)
 <use images/architecture.png>
 Package pdftex.def Info: images/architecture.png  used on input line 10.
@@ -634,7 +634,7 @@ Overfull \hbox (18.02338pt too wide) in paragraph at lines 10--11
  [][] 
  []
 
-<images/optimizer.png, id=149, 178.6675pt x 146.5475pt>
+<images/optimizer.png, id=150, 178.6675pt x 146.5475pt>
 File: images/optimizer.png Graphic file (type png)
 <use images/optimizer.png>
 Package pdftex.def Info: images/optimizer.png  used on input line 17.
@@ -674,42 +674,42 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [8 <./images/optimizer.png>]) (./sections/results.tex
-<images/report/FaceMask-train-accuracy.png, id=170, 433.62pt x 433.62pt>
+<images/report/FaceMask-train-accuracy.png, id=171, 433.62pt x 433.62pt>
 File: images/report/FaceMask-train-accuracy.png Graphic file (type png)
 <use images/report/FaceMask-train-accuracy.png>
 Package pdftex.def Info: images/report/FaceMask-train-accuracy.png  used on inp
-ut line 12.
+ut line 13.
 (pdftex.def)             Requested size: 216.80946pt x 216.80946pt.
-<images/report/FaceMask-train-loss.png, id=171, 433.62pt x 433.62pt>
+<images/report/FaceMask-train-loss.png, id=172, 433.62pt x 433.62pt>
 File: images/report/FaceMask-train-loss.png Graphic file (type png)
 <use images/report/FaceMask-train-loss.png>
 Package pdftex.def Info: images/report/FaceMask-train-loss.png  used on input l
-ine 13.
+ine 14.
 (pdftex.def)             Requested size: 216.80946pt x 216.80946pt.
 
-Overfull \hbox (75.60411pt too wide) in paragraph at lines 12--14
+Overfull \hbox (75.60411pt too wide) in paragraph at lines 13--15
 [][] [] 
  []
 
-<images/report/FaceMask-validation-accuracy.png, id=172, 433.62pt x 433.62pt>
+<images/report/FaceMask-validation-accuracy.png, id=173, 433.62pt x 433.62pt>
 File: images/report/FaceMask-validation-accuracy.png Graphic file (type png)
 <use images/report/FaceMask-validation-accuracy.png>
 Package pdftex.def Info: images/report/FaceMask-validation-accuracy.png  used o
-n input line 15.
+n input line 16.
 (pdftex.def)             Requested size: 216.80946pt x 216.80946pt.
-<images/report/FaceMask-validation-loss.png, id=173, 433.62pt x 433.62pt>
+<images/report/FaceMask-validation-loss.png, id=174, 433.62pt x 433.62pt>
 File: images/report/FaceMask-validation-loss.png Graphic file (type png)
 <use images/report/FaceMask-validation-loss.png>
 Package pdftex.def Info: images/report/FaceMask-validation-loss.png  used on in
-put line 16.
+put line 17.
 (pdftex.def)             Requested size: 216.80946pt x 216.80946pt.
 
-Overfull \hbox (75.60411pt too wide) in paragraph at lines 15--17
+Overfull \hbox (75.60411pt too wide) in paragraph at lines 16--18
 [][] [] 
  []
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 18.
+Package hyperref Warning: Suppressing link with empty target on input line 19.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -721,42 +721,42 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [9 <./images/report/FaceMask-train-accuracy.png> <./images/report/FaceMask-trai
 n-loss.png>]
-<images/report/human-train-accuracy.png, id=181, 433.62pt x 433.62pt>
+<images/report/human-train-accuracy.png, id=182, 433.62pt x 433.62pt>
 File: images/report/human-train-accuracy.png Graphic file (type png)
 <use images/report/human-train-accuracy.png>
 Package pdftex.def Info: images/report/human-train-accuracy.png  used on input 
-line 21.
+line 22.
 (pdftex.def)             Requested size: 216.80946pt x 216.80946pt.
-<images/report/Human-train-loss.png, id=182, 433.62pt x 433.62pt>
+<images/report/Human-train-loss.png, id=183, 433.62pt x 433.62pt>
 File: images/report/Human-train-loss.png Graphic file (type png)
 <use images/report/Human-train-loss.png>
 Package pdftex.def Info: images/report/Human-train-loss.png  used on input line
- 22.
+ 23.
 (pdftex.def)             Requested size: 216.80946pt x 216.80946pt.
 
-Overfull \hbox (75.60411pt too wide) in paragraph at lines 21--23
+Overfull \hbox (75.60411pt too wide) in paragraph at lines 22--24
 [][] [] 
  []
 
-<images/report/Human-validation-accuracy.png, id=183, 433.62pt x 433.62pt>
+<images/report/Human-validation-accuracy.png, id=184, 433.62pt x 433.62pt>
 File: images/report/Human-validation-accuracy.png Graphic file (type png)
 <use images/report/Human-validation-accuracy.png>
 Package pdftex.def Info: images/report/Human-validation-accuracy.png  used on i
-nput line 24.
+nput line 25.
 (pdftex.def)             Requested size: 216.80946pt x 216.80946pt.
-<images/report/Human-validation-loss.png, id=184, 433.62pt x 433.62pt>
+<images/report/Human-validation-loss.png, id=185, 433.62pt x 433.62pt>
 File: images/report/Human-validation-loss.png Graphic file (type png)
 <use images/report/Human-validation-loss.png>
 Package pdftex.def Info: images/report/Human-validation-loss.png  used on input
- line 25.
+ line 26.
 (pdftex.def)             Requested size: 216.80946pt x 216.80946pt.
 
-Overfull \hbox (75.60411pt too wide) in paragraph at lines 24--26
+Overfull \hbox (75.60411pt too wide) in paragraph at lines 25--27
 [][] [] 
  []
 
 
-Package hyperref Warning: Suppressing link with empty target on input line 26.
+Package hyperref Warning: Suppressing link with empty target on input line 27.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -769,7 +769,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [10 <./images/report/FaceMask-validation-accuracy.png> <./images/report/FaceMas
 k-validation-loss.png> <./images/report/human-train-accuracy.png> <./images/rep
 ort/Human-train-loss.png>]) (./sections/gui.tex
-<images/UnMasked.png, id=194, 1332.98pt x 853.1875pt>
+<images/UnMasked.png, id=195, 1332.98pt x 853.1875pt>
 File: images/UnMasked.png Graphic file (type png)
 <use images/UnMasked.png>
 Package pdftex.def Info: images/UnMasked.png  used on input line 4.
@@ -865,10 +865,10 @@ ljfour/jknappen/ec/ecrm1200.600pk> </Users/amirdahan/Library/texlive/2021basic/
 texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1440.600pk> </Users/amirdahan/Library
 /texlive/2021basic/texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1440.600pk>
 Output written on /Users/amirdahan/PycharmProjects/FaceMaskDetection/out/main.p
-df (14 pages, 2500249 bytes).
+df (14 pages, 2504893 bytes).
 PDF statistics:
- 654 PDF objects out of 1000 (max. 8388607)
- 230 compressed objects within 3 object streams
+ 656 PDF objects out of 1000 (max. 8388607)
+ 231 compressed objects within 3 object streams
  54 named destinations out of 1000 (max. 500000)
  207 words of extra memory for PDF output out of 10000 (max. 10000000)
 
