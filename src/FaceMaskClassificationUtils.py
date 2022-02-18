@@ -241,7 +241,7 @@ def evaluation(dataloaders, model, class_names):
         for j in range(len(inputs)):
             print("Acutal label", class_names[np.array(labels)[j]])
             inp = inputs.data[j]
-            imshow(inp, 'predicted:' + class_names[preds[j]])
+            #imshow(inp, 'predicted:' + class_names[preds[j]])
 
 
 def print_labeled_samples(dataloaders, class_names):
@@ -249,7 +249,7 @@ def print_labeled_samples(dataloaders, class_names):
 
     out = torchvision.utils.make_grid(inputs)
 
-    imshow(out, title=[class_names[x] for x in classes])
+    #imshow(out, title=[class_names[x] for x in classes])
 
 
 class CNN(nn.Module):

@@ -9,7 +9,7 @@ import torch.optim as optim
 import torchvision
 from torch.optim import lr_scheduler
 from torchvision import models
-from FaceMaskClassificationUtils import imshow, DEVICE, CPU_DEVICE, split_prepare_dataset, CNN, train_model, evaluation, test_transform
+from FaceMaskClassificationUtils import imshow, DEVICE, CPU_DEVICE, split_prepare_dataset, CNN, train_model, evaluation, test_transform, print_labeled_samples
 
 
 natural_image_class_names_list = ['airplane', 'car', 'cat', 'dog', 'flower', 'fruit', 'motorbike', 'person']
@@ -20,14 +20,6 @@ num_workers = 4
 
 _num_epochs = 10
 _train_size, _validation_size, _test_size = 0.7, 0.15, 0.15
-
-
-def print_labeled_samples(dataloaders, class_names):
-    inputs, classes = next(iter(dataloaders['test']))
-
-    out = torchvision.utils.make_grid(inputs)
-
-    imshow(out, title=[class_names[x] for x in classes])
 
 
 def classify_natural_image(image_path, model):

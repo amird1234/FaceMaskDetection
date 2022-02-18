@@ -27,13 +27,14 @@ class FinalProject:
         print("cropping image")
         imgs = self.oc.objects_crop(image_path)
         if imgs is None:
+            print("No objects detected in image, Not Human")
             return None, None
         mask_usages = []
         print("single_image_classify got " + str(len([img for img in imgs])) + " faces to classify")
         np_bbox, _ = self.oc.bounding_box(orig_img)
         for i, img in enumerate(imgs):
             mask_usage = classify_mask_usage(img, self.mask_model)
-            imshow(img, str(i) + ": mask usage is " + str(mask_usage))
+            # imshow(img, str(i) + ": mask usage is " + str(mask_usage))
             mask_usages.append((img, mask_usage))
             box = np_bbox[i]
             orig_img = draw_bounding_boxes(orig_img, box, mask_usage)
