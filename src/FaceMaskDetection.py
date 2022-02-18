@@ -1,4 +1,5 @@
 import os
+import argparse
 
 import torch
 import torch.nn as nn
@@ -73,4 +74,21 @@ def load_face_mask_model(mask_model_path):
 
 
 if __name__ == "__main__":
-    train_face_mask_detection()
+    parser = argparse.ArgumentParser(description='Description of your program')
+    parser.add_argument('-M', '--model_path', help='Model Path', required=True)
+    parser.add_argument('-D', '--data_path', help='Data Path', required=False)
+    parser.add_argument('-F', '--image_path', help='image to classify', required=True)
+    parser.add_argument('--train', dest='train', action='store_true')
+    parser.set_defaults(train=False)
+    args = parser.parse_args()
+    print(args)
+
+    # train if necessary
+    if args.train:
+        train_face_mask_detection(args.model_path, args.data_path)
+
+    # load the model
+    model = load_face_mask_model(args.model_path)
+
+    # classify the requested image
+    classify_mask_usage(args.image_path, model)
