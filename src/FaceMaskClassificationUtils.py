@@ -191,7 +191,9 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs, dataloaders,
 
     print('Training complete')
     print('Best val Acc: {:4f}'.format(best_acc))
+    reports = os.path.join(os.path.abspath(''), "Reports")
 
+    print('saving report to ' + reports)
     for m in measurements:
         for phase in ['train', 'validation']:
             plt.clf()
@@ -203,7 +205,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs, dataloaders,
                 plt.plot(best_epoch, measurements[m][phase][best_epoch], 'g*')
             plt.title(phase + " " + m)
             #plt.show()
-            plt.savefig(os.path.join('/home/adahan/Project/report/', title + '-' + phase + '-' + m + '.png'))
+            plt.savefig(os.path.join(reports, title + '-' + phase + '-' + m + '.png'))
             plt.clf()
 
     model.load_state_dict(best_model_wts)
