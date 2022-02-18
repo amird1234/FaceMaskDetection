@@ -133,7 +133,7 @@ def split_prepare_dataset(data_dir, num_workers, batch_size):
     return dataloaders, total_batch_sizes, class_names
 
 
-def train_model(model, criterion, optimizer, scheduler, num_epochs, dataloaders, total_batch_sizes, batch_size):
+def train_model(model, criterion, optimizer, scheduler, num_epochs, dataloaders, total_batch_sizes, batch_size, title):
     model = model.to(DEVICE)
     best_acc = 0.0
     best_model_wts = copy.deepcopy(model.state_dict())
@@ -203,7 +203,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs, dataloaders,
                 plt.plot(best_epoch, measurements[m][phase][best_epoch], 'g*')
             plt.title(phase + " " + m)
             #plt.show()
-            plt.savefig(os.path.join('/home/adahan/Project/report/', "FaceMask" + '-' + phase + '-' + m + '.png'))
+            plt.savefig(os.path.join('/home/adahan/Project/report/', title + '-' + phase + '-' + m + '.png'))
             plt.clf()
 
     model.load_state_dict(best_model_wts)
