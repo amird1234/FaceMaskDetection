@@ -16,3 +16,7 @@
 \contentsline {section}{\numberline {7}Appendixes}{12}{section.7}%
 \contentsline {subsection}{\numberline {7.1}The Code}{13}{subsection.7.1}%
 \contentsline {subsection}{\numberline {7.2}How To Run The Project}{13}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Demo Agena}{15}{subsection.7.3}%
+\contentsline {subsubsection}{\numberline {7.3.1}Textual}{15}{subsubsection.7.3.1}%
+\contentsline {subsubsection}{\numberline {7.3.2}Snapshots}{15}{subsubsection.7.3.2}%
+\contentsline {subsubsection}{\numberline {7.3.3}Video}{18}{subsubsection.7.3.3}%

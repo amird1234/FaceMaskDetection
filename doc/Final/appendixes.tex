@@ -21,7 +21,7 @@ My project is consisted of the following components:
     \centering
     \begin{tabular}{ll}
         \midrule
-        \textbf{Camera.py} & Capture frames from Camera or Video  \\
+        \textbf{Camera.py} & Capture frames from Camera or a Video  \\
         \textbf{FaceMaskClassificationUtils.py} & Shared Helper and constants  \\
         \textbf{FaceMaskDetection.py} & FaceMask classifier model   \\
         \textbf{FinalProject.py} & train and classify without a GUI \\
@@ -35,11 +35,10 @@ My project is consisted of the following components:
 \end{table}
 
 \subsection{How To Run The Project}
-
 \begin{itemize}
 \item Train the model and test it, export a checkpoint file for the model and weights
 \begin{verbatim}
-python src/FinalProject.py --help
+$$ python src/FinalProject.py --help
 optional arguments:
   -h, --help            show this help message and exit
   -H HUMAN_MODEL_PATH, --human_model_path HUMAN_MODEL_PATH
@@ -53,20 +52,25 @@ optional arguments:
   -F IMAGE_PATH, --image_path IMAGE_PATH
                         image to classify
   --train
-
 \end{verbatim}
 
 \item{Run GUI to classify images selected by the user:}
 \begin{verbatim}
-python src/Gui.py --help
+$$ python src/Gui.py --help
 optional arguments:
   -h, --help            show this help message and exit
   -H HUMAN_MODEL_PATH, --human_model_path HUMAN_MODEL_PATH
                         Human Model Path
   -M MASK_MODEL_PATH, --mask_model_path MASK_MODEL_PATH
                         Face Mask Model path
-
 \end{verbatim}
+    \item{Run Video/Camera capture and classify frames}
+    \begin{verbatim}
+$$ python src/Camera.py
+usage: Camera.py [-h] -H HUMAN_MODEL_PATH -M MASK_MODEL_PATH -F VIDEO_PATH
+                 [--skip_capturing]
+
+    \end{verbatim}
 \end{itemize}
 
 Prerequisites:
@@ -74,3 +78,36 @@ Prerequisites:
     \item Pre trained model checkpoint (Model \& weights)
     \item Project's Python source code
 \end{itemize}
+
+\subsection{Demo Agena}
+\subsubsection{Textual}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/Demo/Textual.png}
+    \caption{Cropping Sample}
+    \label{fig:Textual}
+\end{figure}
+\subsubsection{Snapshots}
+I'll attach here samples of my self tests:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/Demo/Masked.png}
+    \caption{Cropping Sample}
+    \label{fig:MaskedAmir}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/Demo/Partial.png}
+    \caption{Cropping Sample}
+    \label{fig:PartialMaskedAmir}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/Demo/Unmasked.png}
+    \caption{Cropping Sample}
+    \label{fig:UnMaskedAmir}
+\end{figure}
+
+\subsubsection{Video}
