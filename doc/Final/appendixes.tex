@@ -81,33 +81,51 @@ Prerequisites:
 
 \subsection{Demo Agena}
 \subsubsection{Textual}
+\begin{verbatim}
+$ cd ~/Project/ && time python src/FinalProject.py \
+                        -H out_models/CombinedModel2.pth \
+                        -M out_models/MaskModel2.pth \
+                        -a data/human/ -b data/face-mask/ \
+                        -N out_models/NaturalNodel2.pth \
+                        -c data/natural_images \
+                        -F samples/nre/Partial.jpg
+\end{verbatim}
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/Demo/Textual.png}
     \caption{Cropping Sample}
     \label{fig:Textual}
 \end{figure}
-\subsubsection{Snapshots}
-I'll attach here samples of my self tests:
+\subsubsection{Gui}
+\begin{verbatim}
+$ cd ~/Project/ && python src/Gui.py \
+                   -H out_models/CombinedModel2.pth \
+                   -M out_models/MaskModel2.pth
+\end{verbatim}
+I'll attach here samples of my self Gui tests:
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/Demo/Masked.png}
-    \caption{Cropping Sample}
+    \includegraphics[width=0.5\textwidth]{images/Demo/Masked.png}
+    \caption{Amir is with his mask ON}
     \label{fig:MaskedAmir}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/Demo/Partial.png}
-    \caption{Cropping Sample}
+    \includegraphics[width=0.5\textwidth]{images/Demo/Partial.png}
+    \caption{Amir is with his mask Partially}
     \label{fig:PartialMaskedAmir}
 \end{figure}
-
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/Demo/Unmasked.png}
+    \includegraphics[width=0.5\textwidth]{images/Demo/Unmasked.png}
     \caption{Cropping Sample}
-    \label{fig:UnMaskedAmir}
+    \label{fig:Amir is with his mask OFF}
 \end{figure}
-
 \subsubsection{Video}
+\begin{verbatim}
+$ cd ~/Project/ && python src/Camera.py \
+                   -H out_models/CombinedModel2.pth \
+                   -M out_models/MaskModel2.pth \
+                   -F samples/nre/Movie.mov --skip
+\end{verbatim}
