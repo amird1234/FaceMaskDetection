@@ -6,7 +6,7 @@ from PIL import Image
 class ObjectCrop:
     def __init__(self):
         # If required, create a face detection pipeline using MTCNN:
-        self.mtcnn = MTCNN(keep_all=True, image_size=256, device=DEVICE)
+        self.mtcnn = MTCNN(keep_all=True, image_size=224, device=DEVICE)
 
     def objects_crop(self, in_path):
         """

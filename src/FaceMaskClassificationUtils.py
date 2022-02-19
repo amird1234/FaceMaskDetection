@@ -10,6 +10,11 @@ from torchvision import datasets, transforms
 import torchvision
 import torch.nn as nn
 
+try:
+    import google.colab
+    IN_COLAB = True
+except:
+    IN_COLAB = False
 
 MODEL_PATH = '/content/drive/MyDrive/colab/GenderClassification/New/output/model.pth'
 DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -58,7 +63,11 @@ def draw_bounding_boxes(img, box, label):
     """
     w, _ = img.size
 
-    font = ImageFont.truetype("/usr/share/fonts/truetype/ezra/SILEOT.ttf", round(w/50))
+    if IN_COLAB:
+        font = ImageFont.load_default()
+    else:
+        font = ImageFont.truetype("/usr/share/fonts/truetype/ezra/SILEOT.ttf", round(w/50))
+
     img_draw = img.copy()
     draw = ImageDraw.Draw(img_draw)
     draw.rectangle(box.tolist(), outline=(255, 0, 0), width=3)
@@ -193,19 +202,20 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs, dataloaders,
     reports = os.path.join(os.path.abspath(''), "Reports")
 
     print('saving report to ' + reports)
-    for m in measurements:
-        for phase in ['train', 'validation']:
-            plt.clf()
-            plt.figure(figsize=(6, 6))
-            plt.plot([x for x in range(len(measurements[m][phase]))], measurements[m][phase], '-')
-            if m == 'Accuracy':
-                plt.plot(best_epoch, measurements[m][phase][best_epoch].item(), 'g*')
-            else:
-                plt.plot(best_epoch, measurements[m][phase][best_epoch], 'g*')
-            plt.title(phase + " " + m)
-            #plt.show()
-            plt.savefig(os.path.join(reports, title + '-' + phase + '-' + m + '.png'))
-            plt.clf()
+    if not IN_COLAB:
+        for m in measurements:
+            for phase in ['train', 'validation']:
+                plt.clf()
+                plt.figure(figsize=(6, 6))
+                plt.plot([x for x in range(len(measurements[m][phase]))], measurements[m][phase], '-')
+                if m == 'Accuracy':
+                    plt.plot(best_epoch, measurements[m][phase][best_epoch].item(), 'g*')
+                else:
+                    plt.plot(best_epoch, measurements[m][phase][best_epoch], 'g*')
+                plt.title(phase + " " + m)
+                #plt.show()
+                plt.savefig(os.path.join(reports, title + '-' + phase + '-' + m + '.png'))
+                plt.clf()
 
     model.load_state_dict(best_model_wts)
 

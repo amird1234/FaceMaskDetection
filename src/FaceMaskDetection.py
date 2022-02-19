@@ -6,7 +6,15 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.optim import lr_scheduler
 from torchvision import models
-from FaceMaskClassificationUtils import DEVICE, CPU_DEVICE, train_model, split_prepare_dataset, evaluation
+from FaceMaskClassificationUtils import DEVICE, CPU_DEVICE, train_model, split_prepare_dataset, evaluation, CNN
+
+try:
+    import google.colab
+    IN_COLAB = True
+    print("in google collab")
+except:
+    print("not in google collab")
+    IN_COLAB = False
 
 mask_class_names_list = ['mask_weared_incorrect', 'with_mask', 'without_mask']
 NUM_OF_FACEMASK_CLASSES = len(mask_class_names_list)
@@ -42,11 +50,14 @@ def train_face_mask_detection(model_path, data_dir):
     dataloaders, total_batch_sizes, class_names = split_prepare_dataset(data_dir, num_workers, batch_size)
     # print_labeled_samples(dataloaders, class_names)
 
-    model = models.resnet18(pretrained=False)
-    num_ftrs = model.fc.in_features
-    model.fc = nn.Linear(num_ftrs, NUM_OF_FACEMASK_CLASSES)
+    if IN_COLAB:
+        model = CNN(NUM_OF_FACEMASK_CLASSES)
+    else:
+        model = models.resnet18(pretrained=False)
+        num_ftrs = model.fc.in_features
+        model.fc = nn.Linear(num_ftrs, NUM_OF_FACEMASK_CLASSES)
 
-    #print(model)
+    # print(model)
 
     criterion = nn.CrossEntropyLoss()
     optimizer_ft = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
@@ -56,17 +67,16 @@ def train_face_mask_detection(model_path, data_dir):
     evaluation(dataloaders, model, class_names)
 
     # save model
-    checkpoint = {'model': models.resnet18(),
+    checkpoint = {'model': model,
                   'state_dict': model.state_dict()}
     if os.path.exists(model_path):
         os.remove(model_path)
     torch.save(checkpoint, model_path)
 
+
 def load_face_mask_model(mask_model_path):
     checkpoint = torch.load(mask_model_path, map_location=DEVICE)
     mask_model = checkpoint['model']
-    num_ftrs = mask_model.fc.in_features
-    mask_model.fc = nn.Linear(num_ftrs, NUM_OF_FACEMASK_CLASSES)
     mask_model.load_state_dict(checkpoint['state_dict'])
     mask_model.eval()
     print("mask model successfully loaded")
