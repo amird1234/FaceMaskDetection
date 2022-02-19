@@ -35,6 +35,8 @@ My project is consisted of the following components:
 \end{table}
 
 \subsection{How To Run The Project}
+Code knows to distinguish between google colaboratory environment and other environments, which leads to picking the
+appropriate model.
 \begin{itemize}
 \item Train the model and test it, export a checkpoint file for the model and weights
 \begin{verbatim}
@@ -83,10 +85,10 @@ Prerequisites:
 \subsubsection{Textual}
 \begin{verbatim}
 $ cd ~/Project/ && time python src/FinalProject.py \
-                        -H out_models/CombinedModel2.pth \
-                        -M out_models/MaskModel2.pth \
+                        -H out/CombinedModel.pth \
+                        -M out/MaskModel.pth \
                         -a data/human/ -b data/face-mask/ \
-                        -N out_models/NaturalNodel2.pth \
+                        -N out/NaturalNodel.pth \
                         -c data/natural_images \
                         -F samples/nre/Partial.jpg
 \end{verbatim}
@@ -99,8 +101,8 @@ $ cd ~/Project/ && time python src/FinalProject.py \
 \subsubsection{Gui}
 \begin{verbatim}
 $ cd ~/Project/ && python src/Gui.py \
-                   -H out_models/CombinedModel2.pth \
-                   -M out_models/MaskModel2.pth
+                   -H out/CombinedModel.pth \
+                   -M out/MaskModel.pth
 \end{verbatim}
 I'll attach here samples of my self Gui tests:
 \begin{figure}[H]
@@ -137,7 +139,7 @@ I'll attach here samples of my self Gui tests:
 \subsubsection{Video}
 \begin{verbatim}
 $ cd ~/Project/ && python src/Camera.py \
-                   -H out_models/CombinedModel2.pth \
-                   -M out_models/MaskModel2.pth \
+                   -H out/CombinedModel.pth \
+                   -M out/MaskModel.pth \
                    -F samples/nre/Movie.mov --skip
 \end{verbatim}
