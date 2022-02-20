@@ -53,7 +53,7 @@ def train_face_mask_detection(model_path, data_dir):
     if IN_COLAB:
         model = CNN(NUM_OF_FACEMASK_CLASSES)
     else:
-        model = models.resnet18(pretrained=False)
+        model = models.resnet18(pretrained=True)
         num_ftrs = model.fc.in_features
         model.fc = nn.Linear(num_ftrs, NUM_OF_FACEMASK_CLASSES)
 
@@ -77,6 +77,9 @@ def train_face_mask_detection(model_path, data_dir):
 def load_face_mask_model(mask_model_path):
     checkpoint = torch.load(mask_model_path, map_location=DEVICE)
     mask_model = checkpoint['model']
+    if not IN_COLAB:
+        num_ftrs = mask_model.fc.in_features
+        mask_model.fc = nn.Linear(num_ftrs, NUM_OF_FACEMASK_CLASSES)
     mask_model.load_state_dict(checkpoint['state_dict'])
     mask_model.eval()
     print("mask model successfully loaded")
