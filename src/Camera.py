@@ -70,13 +70,14 @@ class VideoClassifier:
                     break
                 gray = frame  # cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
                 path = os.path.join(in_folder_path, str(i) + ".jpg")
+                print(path)
                 cv.imwrite(path, gray)
                 i = i+1
                 # hold the camera from capturing forever
                 if i > 300:
+                    print("stopped capturing images from comera")
                     break
             cap.release()
-            print(i)
 
             im_files = [f.split(".")[0] for f in os.listdir(in_folder_path)]
             num_frames = len(im_files)
@@ -84,7 +85,7 @@ class VideoClassifier:
 
             # classify frames and save them
             for i in range(num_frames):
-                print(i)
+                print("classifying frame #{}".format(i))
                 path = os.path.join(in_folder_path, str(i) + ".jpg")
                 orig_img = self.classify(path)
                 out_path = os.path.join(out_folder_path, str(i) + ".jpg")
@@ -93,12 +94,15 @@ class VideoClassifier:
         else:
             im_files = [f.split(".")[0] for f in os.listdir(out_folder_path)]
             num_frames = len(im_files)
+            print("analyzing {} frames in out dir".format(num_frames))
             im_files.sort(key=int)
 
+        print("num_frames {}".format(num_frames))
         # show frames
         window_name = 'frame'
         for i in range(num_frames):
             path = os.path.join(out_folder_path, str(i) + ".jpg")
+            print("showing frame #{}".format(i))
             x = cv.imread(path)
             cv.imshow(window_name, x)
             if cv.waitKey(1) == ord('q'):
