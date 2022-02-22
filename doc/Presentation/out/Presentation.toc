@@ -1,0 +1,17 @@
+\babel@toc {english}{}
+\beamer@sectionintoc {1}{Goals}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Expected Achievements}{4}{0}{1}
+\beamer@sectionintoc {2}{Data}{8}{0}{2}
+\beamer@subsubsectionintoc {2}{0}{1}{ Face Mask Detection Dataset \cite {face-mask-detection}}{10}{0}{2}
+\beamer@subsubsectionintoc {2}{0}{2}{ Face Mask Dataset \cite {face-mask-detection} \& Natural Images Dataset \cite {natural-images}}{10}{0}{2}
+\beamer@sectionintoc {3}{Architecture}{11}{0}{3}
+\beamer@subsectionintoc {3}{1}{The Model}{11}{0}{3}
+\beamer@subsectionintoc {3}{2}{Training}{13}{0}{3}
+\beamer@subsectionintoc {3}{3}{Training}{14}{0}{3}
+\beamer@subsectionintoc {3}{4}{Training}{15}{0}{3}
+\beamer@subsectionintoc {3}{5}{Training}{16}{0}{3}
+\beamer@subsectionintoc {3}{6}{Testing Pipeline}{17}{0}{3}
+\beamer@sectionintoc {4}{Results}{18}{0}{4}
+\beamer@sectionintoc {5}{Gui}{20}{0}{5}
+\beamer@sectionintoc {6}{Video}{21}{0}{6}
+\beamer@sectionintoc {7}{Conclusions}{22}{0}{7}

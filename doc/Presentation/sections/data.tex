@@ -1,0 +1,42 @@
+\begin{frame}
+    \frametitle{The Data}
+    In this project, the goal is to label all faces in the given image as mask/no mask
+    We'll need to determine which of these women is wearing a \alert{medical mask}.
+
+    \begin{block}{Transformations}
+        \begin{itemize}
+            \item Random Horizontal Flip: Horizontally flip the given image randomly with a given probability
+            \item Random Resized Crop: Crop the given image to random size and aspect ratio
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{The Face Mask Detection Dataset}
+    Kaggle's face-mask-detection Dataset, Comprised of the following three classes:
+        \begin{itemize}
+            \item Face with mask (2997)
+            \item Face without mask (2997)
+            \item Mask worn incorrectly (2997)
+        \end{itemize}
+\end{frame}
+
+
+\subsubsection{ \label{secondModel} Face Mask Detection Dataset \cite{face-mask-detection}}
+    \subsubsection{\label{firstModel} Face Mask Dataset \cite{face-mask-detection} \&  Natural Images Dataset \cite{natural-images}}
+\begin{frame}
+    \frametitle{The Face Mask Detection Dataset}
+        A custom superset of Kaggle's face-mask-detection \& natural-images, Comprised of the following classes:
+        \begin{itemize}
+            \item airplane (727)
+            \item car (968)
+            \item cat (885)
+            \item dog (702)
+            \item flower (843)
+            \item fruit (1000)
+            \item mask\_weared\_incorrect (1000)
+            \item motorbike (1000)
+            \item with\_mask (1000)
+            \item without\_mask (1000)
+        \end{itemize}
+\end{frame}
